@@ -55,5 +55,9 @@ namespace GlobalEvents {
 			}
 		}
 
+		public static bool IsKeyValid (string name) {
+			return globalEvents.ContainsKey (name);
+		}
+
 	}
 }

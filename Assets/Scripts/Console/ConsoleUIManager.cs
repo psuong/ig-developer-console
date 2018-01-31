@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace DeveloperConsole {
+namespace DeveloperConsole.UI {
 
 	[RequireComponent (typeof (CanvasGroup))]
 	public class ConsoleUIManager : MonoBehaviour {
