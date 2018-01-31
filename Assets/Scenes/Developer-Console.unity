@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 275097472}
   - component: {fileID: 275097471}
   - component: {fileID: 275097475}
+  - component: {fileID: 275097476}
   m_Layer: 5
   m_Name: Developer Console
   m_TagString: Untagged
@@ -282,6 +283,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &275097476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 275097470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02747a53c7465b2418d8609db112c199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startAlpha: 0
+  endAlpha: 1
+  inputKey: 96
 --- !u!1 &581599180
 GameObject:
   m_ObjectHideFlags: 0
