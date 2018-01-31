@@ -42,3 +42,6 @@ sysinfo.txt
 
 
 # End of https://www.gitignore.io/api/unity,visualstudiocode
+
+# Local Testing Folder
+/Assets/Test*
