@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CommonEventHandler {
+namespace GlobalEvents {
 
 	/// <summary>
 	/// Stores global events to be freely accessed on a global level.
 	/// </summary>
 	public class GlobalEventHandler {
 
-		private static Dictionary<string, Action> globalEvents;
+		private static IDictionary<string, Action> globalEvents = new Dictionary<string, Action> ();
 		// TODO: Generify the object relative events
 		private static Dictionary<MonoBehaviour, Dictionary<string, Action>> monoRelativeEvents;
 		private static Dictionary<ScriptableObject, Dictionary<string, Action>> scriptableRelativeEvents;
