@@ -2,7 +2,7 @@
 
 namespace DeveloperConsole {
     using GlobalEvents;
-
+    
     public class ConsoleCmdExecutor : MonoBehaviour {
 
         /// <summary>

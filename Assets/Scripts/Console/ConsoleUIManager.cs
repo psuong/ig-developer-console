@@ -11,7 +11,7 @@ namespace DeveloperConsole.UI {
         private float startAlpha = 0f;
         [SerializeField, Range (0f, 1f)]
         private float endAlpha = 1f;
-        [SerializeField]
+        [SerializeField, Tooltip ("What key should be pressed to enable/disable the console?")]
         private KeyCode inputKey = KeyCode.BackQuote;
 
         private CanvasGroup canvasGroup;
@@ -23,6 +23,7 @@ namespace DeveloperConsole.UI {
 
         private void Start () {
             canvasGroup = GetComponent<CanvasGroup> ();
+            // Disable the canvas by default
             DisableConsole ();
         }
 
