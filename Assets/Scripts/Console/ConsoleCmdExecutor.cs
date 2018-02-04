@@ -1,23 +1,22 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace DeveloperConsole {
-	using GlobalEvents;
+    using GlobalEvents;
 
-	public class ConsoleCmdExecutor : MonoBehaviour {
+    public class ConsoleCmdExecutor : MonoBehaviour {
 
-		/// <summary>
-		/// Executes a delegate within the Global Event Table if it exists.
-		/// </summary>
-		/// <param name="input">The user's input</param>
-		public void ExecuteCommand (string input) {
-			if (GlobalEventHandler.IsKeyValid (input)) {
-				// TODO: Log that the event executed in the console.
-				GlobalEventHandler.InvokeEvent (input);
-			} else {
-				// TODO: Log that the input is not in the global event table.
-			}
-		}
+        /// <summary>
+        /// Executes a delegate within the global event table if it exists.
+        /// </summary>
+        /// <param name="input">The user's input</param>
+        public void TryExecuteCommand (string input) {
+            if (GlobalEventHandler.IsEventRegistered (input)) {
+                // TODO: Log the output of the event
+                GlobalEventHandler.InvokeEvent (input);
+            } else {
+                // TODO: Log the output of a non registered event
+            }
+        }
 
-	}
+    }
 }
