@@ -8,26 +8,26 @@ namespace DeveloperConsole {
     /// This is used to see the ConsolesHistory within the inspector of the
     /// scriptable object.
     /// </summary>
-    [CustomEditor(typeof(ConsoleHistory))]
-    public class ConsoleHistoryInspector : Editor {
+    [CustomEditor(typeof(CommandHistory))]
+    public class CommandHistoryInspector : Editor {
 
-        private const string ConsoleHistoryName = "consoleHistory";
+        private const string CommandHistoryName = "consoleHistory";
         private const string CurrentIndexName = "currentIndex";
 
-        private ConsoleHistory consoleHistory;
+        private CommandHistory consoleHistory;
         private System.Type type;
         private FieldInfo consoleHistoryField;
         private FieldInfo currentIndexField;
 
         private void OnEnable() {
-            consoleHistory = target as ConsoleHistory;
+            consoleHistory = target as CommandHistory;
             type = consoleHistory.GetType();
 
-            consoleHistoryField = type.GetField(ConsoleHistoryName, BindingFlags.NonPublic | BindingFlags.Instance);
+            consoleHistoryField = type.GetField(CommandHistoryName, BindingFlags.NonPublic | BindingFlags.Instance);
             currentIndexField = type.GetField(CurrentIndexName, BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        private void DrawConsoleHistory() {
+        private void DrawCommandHistory() {
             EditorGUILayout.LabelField("Console History", EditorStyles.boldLabel);
             var list = (IList<string>)consoleHistoryField.GetValue(consoleHistory);
 
@@ -57,7 +57,7 @@ namespace DeveloperConsole {
 
         public override void OnInspectorGUI() {
             DrawDefaultInspector();
-            DrawConsoleHistory();
+            DrawCommandHistory();
             DrawIndexValue();
         }
 

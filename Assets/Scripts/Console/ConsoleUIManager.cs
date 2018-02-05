@@ -8,7 +8,7 @@ namespace DeveloperConsole.UI {
     public class ConsoleUIManager : MonoBehaviour {
         
         [Header("Inputs")]
-        [SerializeField, Tooltip("What key should be pressed to enable/disable the console?")]
+        [SerializeField, Tooltip("What key should be pressed to enable/disable the command?")]
         private KeyCode showConsoleKey = KeyCode.BackQuote;
         [SerializeField]
         private KeyCode forwardHistoryKey = KeyCode.UpArrow;
@@ -20,8 +20,8 @@ namespace DeveloperConsole.UI {
         private InputField inputField;
 
         [Header("Console History Storage")]
-        [SerializeField, Tooltip("Which scriptable object store the console history?")]
-        private ConsoleHistory consoleHistory;
+        [SerializeField, Tooltip("Which scriptable object store the command history?")]
+        private CommandHistory commandHistory;
 
         private CanvasGroup canvasGroup;
         private bool isConsoleShowing;
@@ -33,8 +33,8 @@ namespace DeveloperConsole.UI {
         private void Start() {
             canvasGroup = GetComponent<CanvasGroup>();
 
-            Assert.IsNotNull(inputField, "No console input field cached!");
-            Assert.IsNotNull(consoleHistory, "No console history cached!");
+            Assert.IsNotNull(inputField, "No command input field cached!");
+            Assert.IsNotNull(commandHistory, "No command history cached!");
 
             // Disable the canvas by default
             DisableConsole();
@@ -50,14 +50,14 @@ namespace DeveloperConsole.UI {
             }
 
             if (Input.GetKeyUp(forwardHistoryKey)) {
-                consoleHistory.DecrementHistory();
-                var command = consoleHistory.GetRecentCommand();
+                commandHistory.DecrementHistory();
+                var command = commandHistory.GetRecentCommand();
                 SetInputFieldText(command);
             }
 
             if (Input.GetKeyUp(backwardHistoryKey)) {
-                consoleHistory.IncrementHistory();
-                var command = consoleHistory.GetRecentCommand();
+                commandHistory.IncrementHistory();
+                var command = commandHistory.GetRecentCommand();
                 SetInputFieldText(command);
             }
         }

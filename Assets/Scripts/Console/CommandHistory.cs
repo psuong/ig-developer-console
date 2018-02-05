@@ -1,20 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace DeveloperConsole {
 
-    [CreateAssetMenu(fileName = "ConsoleHistory", menuName = "Developer Console/Console History")]
-    public class ConsoleHistory : ScriptableObject {
+    [CreateAssetMenu(fileName = "CommandHistory", menuName = "Developer Console/Command History")]
+    public class CommandHistory : ScriptableObject {
 
         [SerializeField, Tooltip("How many commands should we keep?")]
-        private int historySize = 20;
+        private int cmdHistorySize = 20;
 
         private int currentIndex;               // Stores the current index of what's added to the history
-        private IList<string> consoleHistory;   // Stores the console cmds
+        private IList<string> commandHistory;   // Stores the console cmds
 
         private void OnEnable() {
-            consoleHistory = new List<string>();
+            commandHistory = new List<string>();
             currentIndex = 0;
         }
         
@@ -24,15 +23,15 @@ namespace DeveloperConsole {
         /// <param name="cmd">A string entered in the input field.</param>
         public void AddConsoleCmd(string cmd) {
             if (cmd != string.Empty) {
-                if (consoleHistory.Count < historySize) {
-                    consoleHistory.Add(cmd);
+                if (commandHistory.Count < cmdHistorySize) {
+                    commandHistory.Add(cmd);
                 } else {
                     // Treat the list like a stack-queue
-                    consoleHistory.RemoveAt(0);
-                    consoleHistory.Add(cmd);
+                    commandHistory.RemoveAt(0);
+                    commandHistory.Add(cmd);
                 }
             }
-            currentIndex = consoleHistory.Count;
+            currentIndex = commandHistory.Count;
         }
         
         /// <summary>
@@ -41,7 +40,7 @@ namespace DeveloperConsole {
         /// </summary>
         /// <returns>The newly computed index.</returns>
         public int IncrementHistory() {
-            var size = consoleHistory.Count;
+            var size = commandHistory.Count;
             if (size > 0) {
                 currentIndex = (currentIndex + 1) % size;
             }
@@ -54,7 +53,7 @@ namespace DeveloperConsole {
         /// </summary>
         /// <returns>The newly computed index.</returns>
         public int DecrementHistory() {
-            var size = consoleHistory.Count;
+            var size = commandHistory.Count;
             if (size > 0) {
                 currentIndex = (currentIndex - 1 < 0) ? size - 1 : (currentIndex - 1) % size;
             }
@@ -66,11 +65,7 @@ namespace DeveloperConsole {
         /// </summary>
         /// <returns>A non empty string if the console command.</returns>
         public string GetRecentCommand() {
-            if(consoleHistory.Count > 0) {
-                return consoleHistory[currentIndex];
-            } else {
-                return string.Empty;
-            }
+            return (commandHistory.Count > 0) ? commandHistory[currentIndex] : string.Empty;
         }
 
     }
