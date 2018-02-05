@@ -29,18 +29,26 @@ namespace DeveloperConsole {
 
         private void DrawConsoleHistory() {
             EditorGUILayout.LabelField("Console History", EditorStyles.boldLabel);
-            var list =(IList<string>) consoleHistoryField.GetValue(consoleHistory);
+            var list = (IList<string>)consoleHistoryField.GetValue(consoleHistory);
 
-            if(list != null) {
+            if (list != null) {
                 for(int i = 0; i < list.Count; i++) {
                     var entry = list[i];
-                    EditorGUILayout.LabelField(string.Format("Element {0}: {1}", i + 1, entry));
+                    EditorGUILayout.LabelField(string.Format("Command at {0}: {1}", i + 1, entry));
                 }
             }
         }
 
-        private void DrawCurrentIndex() {
-            EditorGUILayout.LabelField(string.Format("Current Index: {0}", currentIndexField.GetValue(consoleHistory)));
+        private void DrawIndexValue() {
+            var list = (IList<string>)consoleHistoryField.GetValue(consoleHistory);
+            string value;
+            var index = currentIndexField.GetValue(consoleHistory);
+            try {
+                value = list[(int)index];
+            } catch (System.ArgumentOutOfRangeException) {
+                value = "N/A";
+            }
+            EditorGUILayout.LabelField(string.Format("Current Index: {0}, Value: {1}", index, value));
         }
 
         public override bool RequiresConstantRepaint() {
@@ -50,7 +58,7 @@ namespace DeveloperConsole {
         public override void OnInspectorGUI() {
             DrawDefaultInspector();
             DrawConsoleHistory();
-            DrawCurrentIndex();
+            DrawIndexValue();
         }
 
     }

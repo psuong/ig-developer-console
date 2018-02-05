@@ -334,9 +334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02747a53c7465b2418d8609db112c199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startAlpha: 0
-  endAlpha: 1
-  inputKey: 96
+  showConsoleKey: 96
+  forwardHistoryKey: 273
+  backwardHistoryKey: 274
+  inputField: {fileID: 1909241747}
+  consoleHistory: {fileID: 11400000, guid: a6f1d1c66adca4f4798065ba4be13175, type: 2}
 --- !u!1 &581599180
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,8 +770,19 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 7bbceca1081b546ff8adfccbe4af301b, type: 2}
-        m_MethodName: ExecuteCommand
+      - m_Target: {fileID: 11400000, guid: a6f1d1c66adca4f4798065ba4be13175, type: 2}
+        m_MethodName: AddConsoleCmd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 275097476}
+        m_MethodName: SetEmptyField
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
