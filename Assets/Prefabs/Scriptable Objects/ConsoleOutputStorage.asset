@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27b866709e0a648329ce055165d8c97f, type: 3}
-  m_Name: Command History
+  m_Script: {fileID: 11500000, guid: 06bbfc4281f404d9e8c12cd605611e84, type: 3}
+  m_Name: ConsoleOutputStorage
   m_EditorClassIdentifier: 
-  cmdHistorySize: 20
+  consoleOutputHistorySize: 20

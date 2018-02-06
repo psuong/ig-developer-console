@@ -15,13 +15,17 @@ namespace DeveloperConsole.UI {
         [SerializeField]
         private KeyCode backwardHistoryKey = KeyCode.DownArrow;
 
-        [Header("UI Property")]
+        [Header("UI Properties")]
         [SerializeField, Tooltip("What is the text input field to reference?")]
         private InputField inputField;
+        [SerializeField, Tooltip("Which text field should show the output message?")]
+        private Text outputTextField;
 
-        [Header("Console History Storage")]
+        [Header("History Storage")]
         [SerializeField, Tooltip("Which scriptable object store the command history?")]
         private CommandHistory commandHistory;
+        [SerializeField, Tooltip("Which scriptable object stores the console outputs?")]
+        private ConsoleOutputStorage consoleOutputStorage;
 
         private CanvasGroup canvasGroup;
         private bool isConsoleShowing;
@@ -62,6 +66,11 @@ namespace DeveloperConsole.UI {
             }
         }
 
+        private void DisplayOutputs() {
+            foreach (var output in consoleOutputStorage.ConsoleOutputs) {
+            }
+        }
+
         private void DisableConsole() {
             canvasGroup.alpha = 0f;
             canvasGroup.blocksRaycasts = canvasGroup.interactable = isConsoleShowing = false;
@@ -75,7 +84,7 @@ namespace DeveloperConsole.UI {
         private void SetInputFieldText(string input) {
             inputField.text = input;
         }
-        
+
         /// <summary>
         /// Sets the input field to be empty. The input parameter
         /// is not needed, but this is used for UnityEvents.

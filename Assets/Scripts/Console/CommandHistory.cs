@@ -16,6 +16,16 @@ namespace DeveloperConsole {
             commandHistory = new List<string>();
             currentIndex = 0;
         }
+
+        private bool IsPreviousCurrent(string cmd) {
+            return commandHistory[commandHistory.Count - 1] == cmd;
+        }
+
+        private void TryAddCommand(string cmd) {
+            if (!IsPreviousCurrent(cmd)) {
+                commandHistory.Add(cmd);
+            }
+        }
         
         /// <summary>
         /// Records non empty string console commands.
@@ -24,7 +34,7 @@ namespace DeveloperConsole {
         public void AddConsoleCmd(string cmd) {
             if (cmd != string.Empty) {
                 if (commandHistory.Count < cmdHistorySize) {
-                    commandHistory.Add(cmd);
+                    TryAddCommand(cmd);
                 } else {
                     // Treat the list like a stack-queue
                     commandHistory.RemoveAt(0);
