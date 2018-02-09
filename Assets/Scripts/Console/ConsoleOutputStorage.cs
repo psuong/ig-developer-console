@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace DeveloperConsole {
@@ -26,6 +25,7 @@ namespace DeveloperConsole {
         /// <summary>
         /// Adds a non empty message to the console output.
         /// </summary>
+        /// <param name="message">The output message to store.</param>
         public void AddConsoleOutput(string message) {
             if (message != string.Empty) {
                 if (consoleOutputs.Count < consoleOutputHistorySize) {

@@ -67,7 +67,11 @@ namespace DeveloperConsole.UI {
         }
 
         private void DisplayOutputs() {
-            foreach (var output in consoleOutputStorage.ConsoleOutputs) {
+            var consoleOutputs = consoleOutputStorage.ConsoleOutputs;
+            for (var i = 0; i < consoleOutputs.Length; i++) {
+                // TODO: Capture the console output.
+                // TODO: Instantiate a text field.
+                // TODO: Manage the # of fields instantiated.
             }
         }
 

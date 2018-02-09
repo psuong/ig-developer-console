@@ -18,9 +18,12 @@ namespace DeveloperConsole {
         }
 
         private bool IsPreviousCurrent(string cmd) {
-            return commandHistory[commandHistory.Count - 1] == cmd;
+            return (commandHistory.Count > 0) ? commandHistory[commandHistory.Count - 1] == cmd : false;
         }
-
+        
+        /// <summary>
+        /// Adds a unique console command.
+        /// </summary>
         private void TryAddCommand(string cmd) {
             if (!IsPreviousCurrent(cmd)) {
                 commandHistory.Add(cmd);
