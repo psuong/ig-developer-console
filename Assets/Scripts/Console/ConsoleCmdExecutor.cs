@@ -3,6 +3,7 @@
 namespace DeveloperConsole {
     using GlobalEvents;
     
+    // TODO: Make this a scriptable object?   
     public class ConsoleCmdExecutor : MonoBehaviour {
 
         /// <summary>

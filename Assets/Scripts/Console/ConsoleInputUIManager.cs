@@ -5,8 +5,8 @@ using UnityEngine.UI;
 namespace DeveloperConsole.UI {
 
     [RequireComponent(typeof(CanvasGroup))]
-    public class ConsoleUIManager : MonoBehaviour {
-        
+    public class ConsoleInputUIManager : MonoBehaviour {
+
         [Header("Inputs")]
         [SerializeField, Tooltip("What key should be pressed to enable/disable the command?")]
         private KeyCode showConsoleKey = KeyCode.BackQuote;
@@ -18,14 +18,10 @@ namespace DeveloperConsole.UI {
         [Header("UI Properties")]
         [SerializeField, Tooltip("What is the text input field to reference?")]
         private InputField inputField;
-        [SerializeField, Tooltip("Which text field should show the output message?")]
-        private Text outputTextField;
 
         [Header("History Storage")]
         [SerializeField, Tooltip("Which scriptable object store the command history?")]
         private CommandHistory commandHistory;
-        [SerializeField, Tooltip("Which scriptable object stores the console outputs?")]
-        private ConsoleOutputStorage consoleOutputStorage;
 
         private CanvasGroup canvasGroup;
         private bool isConsoleShowing;
@@ -63,15 +59,6 @@ namespace DeveloperConsole.UI {
                 commandHistory.IncrementHistory();
                 var command = commandHistory.GetRecentCommand();
                 SetInputFieldText(command);
-            }
-        }
-
-        private void DisplayOutputs() {
-            var consoleOutputs = consoleOutputStorage.ConsoleOutputs;
-            for (var i = 0; i < consoleOutputs.Length; i++) {
-                // TODO: Capture the console output.
-                // TODO: Instantiate a text field.
-                // TODO: Manage the # of fields instantiated.
             }
         }
 

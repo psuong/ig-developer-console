@@ -7,10 +7,17 @@ namespace DeveloperConsole {
     public class ConsoleOutputStorage : ScriptableObject {
         
         /// <summary>
-        /// Returns an array of the console outputs.
+        /// Returns a list of the console outputs.
         /// </summary>
-        public string[] ConsoleOutputs {
-            get { return consoleOutputs.ToArray(); }
+        public IList<string> ConsoleOutputs {
+            get { return consoleOutputs; }
+        }
+        
+        /// <summary>
+        /// Returns the # of elements that can be saved.
+        /// </summary>
+        public int ConsoleOutputHistorySize {
+            get { return consoleOutputHistorySize; }
         }
 
         [SerializeField, Tooltip("How many outputs should be stored?")]
