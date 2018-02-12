@@ -4,18 +4,15 @@ using UnityEngine.UI;
 
 namespace DeveloperConsole.UI {
 
-    [RequireComponent(typeof(CanvasGroup))]
     public class ConsoleInputUIManager : MonoBehaviour {
 
         [Header("Inputs")]
-        [SerializeField, Tooltip("What key should be pressed to enable/disable the command?")]
-        private KeyCode showConsoleKey = KeyCode.BackQuote;
-        [SerializeField]
+        [SerializeField, Tooltip("Which key stroke traverses through the history forward?")]
         private KeyCode forwardHistoryKey = KeyCode.UpArrow;
-        [SerializeField]
+        [SerializeField, Tooltip("Which key stroke traverses through the history backward?")]
         private KeyCode backwardHistoryKey = KeyCode.DownArrow;
 
-        [Header("UI Properties")]
+        [Header("UI Fields")]
         [SerializeField, Tooltip("What is the text input field to reference?")]
         private InputField inputField;
 
@@ -24,52 +21,24 @@ namespace DeveloperConsole.UI {
         private CommandHistory commandHistory;
 
         private CanvasGroup canvasGroup;
-        private bool isConsoleShowing;
-
-        private void Awake() {
-            isConsoleShowing = false;
-        }
 
         private void Start() {
             canvasGroup = GetComponent<CanvasGroup>();
 
             Assert.IsNotNull(inputField, "No command input field cached!");
             Assert.IsNotNull(commandHistory, "No command history cached!");
-
-            // Disable the canvas by default
-            DisableConsole();
         }
 
         private void Update() {
-            if(Input.GetKeyUp(showConsoleKey)) {
-                if(!isConsoleShowing) {
-                    EnableConsole();
-                } else {
-                    DisableConsole();
-                }
-            }
-
             if (Input.GetKeyUp(forwardHistoryKey)) {
                 commandHistory.DecrementHistory();
                 var command = commandHistory.GetRecentCommand();
                 SetInputFieldText(command);
-            }
-
-            if (Input.GetKeyUp(backwardHistoryKey)) {
+            } else if (Input.GetKeyUp(backwardHistoryKey)) {
                 commandHistory.IncrementHistory();
                 var command = commandHistory.GetRecentCommand();
                 SetInputFieldText(command);
             }
-        }
-
-        private void DisableConsole() {
-            canvasGroup.alpha = 0f;
-            canvasGroup.blocksRaycasts = canvasGroup.interactable = isConsoleShowing = false;
-        }
-
-        private void EnableConsole() {
-            canvasGroup.alpha = 1f;
-            canvasGroup.blocksRaycasts = canvasGroup.interactable = isConsoleShowing = true;
         }
 
         private void SetInputFieldText(string input) {
