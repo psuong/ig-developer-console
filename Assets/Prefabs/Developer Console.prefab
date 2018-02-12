@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 114349810835111036}
   - component: {fileID: 114281741412478662}
   - component: {fileID: 225671973349840636}
+  - component: {fileID: 114912340433591472}
   - component: {fileID: 114127212198903574}
   m_Layer: 5
   m_Name: Developer Console
@@ -341,14 +342,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02747a53c7465b2418d8609db112c199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showConsoleKey: 96
   forwardHistoryKey: 273
   backwardHistoryKey: 274
   inputField: {fileID: 114193368463830032}
-  outputTextField: {fileID: 114575184573551734}
   commandHistory: {fileID: 11400000, guid: a6f1d1c66adca4f4798065ba4be13175, type: 2}
-  consoleOutputStorage: {fileID: 11400000, guid: 6f1d801c3034541fc9c886828df1b4ce,
-    type: 2}
 --- !u!114 &114193368463830032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -483,7 +480,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114529091614351024}
   m_HandleRect: {fileID: 224026077717118096}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 0.00000010376599
   m_Size: 0.40925983
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -901,6 +898,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114912340433591472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674134149860196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6dbd71b7847419cb255d273da57309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showConsoleKey: 96
 --- !u!222 &222034274585072920
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1247,7 +1256,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000084822255, y: 588.2001}
+  m_AnchoredPosition: {x: 0.000084822255, y: 588.2}
   m_SizeDelta: {x: 0, y: 995.7}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224980099776300186
