@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4799558189338534}
   - component: {fileID: 114375444367147736}
+  - component: {fileID: 114746515699692642}
   m_Layer: 0
   m_Name: '[Console Command Executor]'
   m_TagString: Untagged
@@ -51,3 +52,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb452e260348d4f7ca2ca4f69d2c3fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114746515699692642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1590388401593716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6dbd71b7847419cb255d273da57309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showConsoleKey: 96
+  developerConsole: {fileID: 1674134149860196, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
+    type: 2}

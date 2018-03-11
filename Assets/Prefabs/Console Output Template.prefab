@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222097969773423284}
   - component: {fileID: 114977191743991200}
   m_Layer: 5
-  m_Name: Console Output
+  m_Name: Console Output Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,9 +60,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'New asdkjalkdj
-
-'
+  m_Text: 
 --- !u!222 &222097969773423284
 CanvasRenderer:
   m_ObjectHideFlags: 1
