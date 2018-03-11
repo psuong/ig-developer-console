@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace DeveloperConsole {
 
+    using DeveloperConsole.Utility;
+
     [CreateAssetMenu(fileName = "ConsoleOutputStorage", menuName = "Developer Console/ConsoleOutputStorage")]
     public class ConsoleOutputStorage : ScriptableObject {
 

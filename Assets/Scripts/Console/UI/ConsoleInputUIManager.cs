@@ -20,11 +20,7 @@ namespace DeveloperConsole.UI {
         [SerializeField, Tooltip("Which scriptable object store the command history?")]
         private CommandHistory commandHistory;
 
-        private CanvasGroup canvasGroup;
-
         private void Start() {
-            canvasGroup = GetComponent<CanvasGroup>();
-
             Assert.IsNotNull(inputField, "No command input field cached!");
             Assert.IsNotNull(commandHistory, "No command history cached!");
         }
@@ -53,6 +49,5 @@ namespace DeveloperConsole.UI {
         public void SetEmptyField(string input) {
             inputField.text = string.Empty;
         }
-
     }
 }

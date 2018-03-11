@@ -54,8 +54,8 @@ namespace GlobalEvents {
         /// Invokes a registered event within the global event table using two arguments.
         /// </summary>
         /// <param name="eventName">The identifier for the event.</param>
-        /// <param name="T1">The first argument to invoke the global event.</param>
-        /// <param name="T2">The second argument to invoke the global event.</param>
+        /// <param name="arg1">The first argument to invoke the global event.</param>
+        /// <param name="arg2">The second argument to invoke the global event.</param>
         public static void InvokeEvent<T1, T2>(string eventName, T1 arg1, T2 arg2) {
             var action = GetDelegate(eventName, globalEventTable) as Action<T1, T2>;
             if (action != null) {

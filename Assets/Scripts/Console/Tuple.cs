@@ -1,20 +1,26 @@
-﻿namespace DeveloperConsole {
+﻿namespace DeveloperConsole.Utility {
 
     /// <summary>
     /// A structured pair of elements.
     /// </summary>
-    public struct Tuple<T, U> {
+    public struct Tuple<T1, T2> {
         
-        public T first;
-        public U second;
-
-        public Tuple(T first, U second) {
+        public T1 first;
+        public T2 second;
+        
+        /// <summary>
+        /// Constructer for the tuple, an ordered pair of elements.
+        /// </summary>
+        public Tuple(T1 first, T2 second) {
             this.first = first;
             this.second = second;
         }
         
-        public static Tuple<T, U> Create(T first, U second) {
-            return new Tuple<T, U>(first, second);
+        /// <summary>
+        /// A utility function to construct a tuple, similar to the constructor.
+        /// </summary>
+        public static Tuple<T1, T2> Create(T1 first, T2 second) {
+            return new Tuple<T1, T2>(first, second);
         }
     }
 }
