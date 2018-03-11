@@ -8,8 +8,6 @@ namespace DeveloperConsole {
     [CreateAssetMenu(fileName = "ConsoleOutputStorage", menuName = "Developer Console/ConsoleOutputStorage")]
     public class ConsoleOutputStorage : ScriptableObject {
 
-        private const string ConsoleAdditionEvent = "Add Output";
-
         /// <summary>
         /// Returns a list of the console outputs.
         /// </summary>
@@ -20,12 +18,12 @@ namespace DeveloperConsole {
         /// <summary>
         /// Returns the # of elements that can be saved.
         /// </summary>
-        public int ConsoleOutputHistorySize {
-            get { return consoleOutputHistorySize; }
+        public int HistorySize {
+            get { return historySize; }
         }
 
         [SerializeField, Tooltip("How many outputs should be stored?")]
-        private int consoleOutputHistorySize = 20;
+        private int historySize = 20;
 
         private IList<Tuple<string, Color>> consoleOutputs;
 
@@ -33,12 +31,12 @@ namespace DeveloperConsole {
             consoleOutputs = new List<Tuple<string, Color>>();
 
             // Subscribe the event
-            GlobalEvents.GlobalEventHandler.SubscribeEvent<string, Color>(ConsoleAdditionEvent, AddConsoleOutput);
+            GlobalEvents.GlobalEventHandler.SubscribeEvent<string, Color>(ConsoleEventConstants.AddOutputEventName, AddConsoleOutput);
         }
 
         private void OnDisable() {
             // Unsubscribe the event on disable
-            GlobalEvents.GlobalEventHandler.SubscribeEvent<string, Color>(ConsoleAdditionEvent, AddConsoleOutput);
+            GlobalEvents.GlobalEventHandler.SubscribeEvent<string, Color>(ConsoleEventConstants.AddOutputEventName, AddConsoleOutput);
         }
 
         /// <summary>
@@ -49,7 +47,7 @@ namespace DeveloperConsole {
         public void AddConsoleOutput(string message, Color color) {
             if (message != string.Empty) {
                 var output = Tuple<string, Color>.Create(message, color);
-                if (consoleOutputs.Count < consoleOutputHistorySize) {
+                if (consoleOutputs.Count < historySize) {
                     consoleOutputs.Add(output);
                 } else {
                     consoleOutputs.RemoveAt(0);

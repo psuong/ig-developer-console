@@ -589,7 +589,7 @@ Prefab:
     - target: {fileID: 114887700855286116, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
         type: 2}
       propertyPath: m_Text
-      value: asdasda
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1300003829059688, guid: 0ae7e754cc7774dab88c2bb97e3d7a91, type: 2}
       propertyPath: m_IsActive

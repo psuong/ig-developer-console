@@ -25,5 +25,16 @@ namespace DeveloperConsole.UI {
             Assert.IsNotNull(textOutputParent, "No parent transform cached!");
             Assert.IsNotNull(consoleOutputStorage, "No console output cached!");
         }
+
+        private void CreateOutputMessage(string message, Color textColor) {
+            var output = Instantiate(outputTextTemplate) as Text;
+            output.text = message;
+            output.color = textColor;
+        }
+
+        private void AddConsoleOutput(Text text) {
+            if (consoleOutputs.Count < consoleOutputStorage.ConsoleOutputHistorySize) {
+            }
+        }
     }
 }

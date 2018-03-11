@@ -76,36 +76,36 @@ namespace GlobalEvents {
         /// Registers an event to the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
-        /// <param name="handler">The function to register.</param>
-        public static void SubscribeEvent(string eventName, Action handler) {
-            SubscribeEvent(eventName, handler as Delegate);
+        /// <param name="action">The function to register.</param>
+        public static void SubscribeEvent(string eventName, Action action) {
+            SubscribeEvent(eventName, action as Delegate);
         }
         
         /// <summary>
         /// Registers an event to the global event table with two arguements.
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
-        /// <param name="handler">The function to register with two arguments.</param>
-        public static void SubscribeEvent<T1, T2>(String eventName, Action<T1, T2> handler) {
-            SubscribeEvent(eventName, handler as Delegate);
+        /// <param name="action">The function to register with two arguments.</param>
+        public static void SubscribeEvent<T1, T2>(String eventName, Action<T1, T2> action) {
+            SubscribeEvent(eventName, action as Delegate);
         }
         
         /// <summary>
         /// Unregisters an event from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
-        /// <param name="handler">The function to remove.</param>
-        public static void UnsubscribeEvent(string eventName, Action handler) {
-            UnsubscribeEvent(eventName, handler as Delegate);
+        /// <param name="action">The function to remove.</param>
+        public static void UnsubscribeEvent(string eventName, Action action) {
+            UnsubscribeEvent(eventName, action as Delegate);
         }
         
         /// <summary>
         /// Unregisters an event from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
-        /// <param name="handler">The function to remove.</param>
-        public static void UnsubscribeEvent<T1, T2>(string eventName, Action<T1, T2> handler) {
-            UnsubscribeEvent(eventName, handler as Delegate);
+        /// <param name="action">The function to remove.</param>
+        public static void UnsubscribeEvent<T1, T2>(string eventName, Action<T1, T2> action) {
+            UnsubscribeEvent(eventName, action as Delegate);
         }
     }
 }
