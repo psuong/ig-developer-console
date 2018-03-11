@@ -25,9 +25,5 @@ namespace DeveloperConsole.UI {
             Assert.IsNotNull(textOutputParent, "No parent transform cached!");
             Assert.IsNotNull(consoleOutputStorage, "No console output cached!");
         }
-
-        private void Update() {
-        }
-
     }
 }

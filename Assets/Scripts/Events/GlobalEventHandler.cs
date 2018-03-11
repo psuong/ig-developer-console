@@ -27,7 +27,6 @@ namespace GlobalEvents {
             Delegate d;
             if (globalEventTable.TryGetValue(eventName, out d)) {
                 globalEventTable[eventName] = Delegate.Combine(d, handler);
-                UnityEngine.Debug.LogFormat("Subscribed event: {0} with handler: {1}", eventName, globalEventTable[eventName].Method.Name);
             } else {
                 globalEventTable.Add(eventName, handler);
             }
