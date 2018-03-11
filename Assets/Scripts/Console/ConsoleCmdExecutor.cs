@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 namespace DeveloperConsole {
+
     using GlobalEvents;
-    
-    // TODO: Make this a scriptable object?   
+
     public class ConsoleCmdExecutor : MonoBehaviour {
 
         /// <summary>
@@ -11,13 +11,14 @@ namespace DeveloperConsole {
         /// </summary>
         /// <param name="input">The user's input</param>
         public void TryExecuteCommand(string input) {
-            if (GlobalEventHandler.IsEventRegistered (input)) {
-                // TODO: Log the output of the event
-                GlobalEventHandler.InvokeEvent (input);
-            } else {
-                // TODO: Log the output of a non registered event
+            if (GlobalEventHandler.IsEventSubscribed(input)) {
+                GlobalEventHandler.InvokeEvent(input);
+            } 
+#if UNITY_EDITOR
+            else {
                 Debug.LogWarningFormat("No event registered with the ID: {0}", input);
             }
+#endif
         }
 
     }

@@ -27,6 +27,7 @@ namespace GlobalEvents {
             Delegate d;
             if (globalEventTable.TryGetValue(eventName, out d)) {
                 globalEventTable[eventName] = Delegate.Combine(d, handler);
+                UnityEngine.Debug.LogFormat("Subscribed event: {0} with handler: {1}", eventName, globalEventTable[eventName].Method.Name);
             } else {
                 globalEventTable.Add(eventName, handler);
             }
@@ -46,8 +47,20 @@ namespace GlobalEvents {
         public static void InvokeEvent(string eventName) {
             var action = GetDelegate(eventName, globalEventTable) as Action;
             if (action != null) {
-                UnityEngine.Debug.LogFormat("Action: {0}", action.Method.ToString());
                 action();
+            }
+        }
+
+        /// <summary> 
+        /// Invokes a registered event within the global event table using two arguments.
+        /// </summary>
+        /// <param name="eventName">The identifier for the event.</param>
+        /// <param name="T1">The first argument to invoke the global event.</param>
+        /// <param name="T2">The second argument to invoke the global event.</param>
+        public static void InvokeEvent<T1, T2>(string eventName, T1 arg1, T2 arg2) {
+            var action = GetDelegate(eventName, globalEventTable) as Action<T1, T2>;
+            if (action != null) {
+                action(arg1, arg2);
             }
         }
         
@@ -74,7 +87,7 @@ namespace GlobalEvents {
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
         /// <param name="handler">The function to register with two arguments.</param>
-        public static void SubscribeEvent<T, T1>(String eventName, Action<T, T1> handler) {
+        public static void SubscribeEvent<T1, T2>(String eventName, Action<T1, T2> handler) {
             SubscribeEvent(eventName, handler as Delegate);
         }
         
@@ -92,7 +105,7 @@ namespace GlobalEvents {
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
         /// <param name="handler">The function to remove.</param>
-        public static void UnsubscribeEvent<T, T1>(string eventName, Action<T, T1> handler) {
+        public static void UnsubscribeEvent<T1, T2>(string eventName, Action<T1, T2> handler) {
             UnsubscribeEvent(eventName, handler);
         }
     }

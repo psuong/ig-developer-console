@@ -450,7 +450,7 @@ Prefab:
     - target: {fileID: 224026077717118096, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.045833282
       objectReference: {fileID: 0}
     - target: {fileID: 224026077717118096, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
         type: 2}
@@ -460,7 +460,7 @@ Prefab:
     - target: {fileID: 224026077717118096, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.33958334
+      value: 0.38541663
       objectReference: {fileID: 0}
     - target: {fileID: 224237052285467236, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
         type: 2}
@@ -500,7 +500,7 @@ Prefab:
     - target: {fileID: 224956173165885286, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 792.50006
+      value: 737.50006
       objectReference: {fileID: 0}
     - target: {fileID: 1104501841702418, guid: 0ae7e754cc7774dab88c2bb97e3d7a91, type: 2}
       propertyPath: m_IsActive
@@ -529,7 +529,7 @@ Prefab:
     - target: {fileID: 224956173165885286, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00003949991
+      value: 0.000038146973
       objectReference: {fileID: 0}
     - target: {fileID: 224026077717118096, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
         type: 2}
@@ -574,12 +574,15 @@ Prefab:
     - target: {fileID: 114887700855286116, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
         type: 2}
       propertyPath: m_Text
-      value: '
-
-'
+      value: asdasda
       objectReference: {fileID: 0}
     - target: {fileID: 1300003829059688, guid: 0ae7e754cc7774dab88c2bb97e3d7a91, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114887700855286116, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
+        type: 2}
+      propertyPath: m_FontData.m_BestFit
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
