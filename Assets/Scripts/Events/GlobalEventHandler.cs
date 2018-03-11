@@ -96,7 +96,7 @@ namespace GlobalEvents {
         /// <param name="eventName">The identifier for the event to remove.</param>
         /// <param name="handler">The function to remove.</param>
         public static void UnsubscribeEvent(string eventName, Action handler) {
-            UnsubscribeEvent(eventName, handler);
+            UnsubscribeEvent(eventName, handler as Delegate);
         }
         
         /// <summary>
@@ -105,7 +105,7 @@ namespace GlobalEvents {
         /// <param name="eventName">The identifier for the event to remove.</param>
         /// <param name="handler">The function to remove.</param>
         public static void UnsubscribeEvent<T1, T2>(string eventName, Action<T1, T2> handler) {
-            UnsubscribeEvent(eventName, handler);
+            UnsubscribeEvent(eventName, handler as Delegate);
         }
     }
 }
