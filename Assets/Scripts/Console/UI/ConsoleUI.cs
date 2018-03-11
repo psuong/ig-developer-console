@@ -2,42 +2,35 @@
 
 namespace DeveloperConsole.UI {
     
-    [RequireComponent(typeof(CanvasGroup))]
     public class ConsoleUI : MonoBehaviour {
 
         [Header("Inputs")]
         [SerializeField, Tooltip("What key should be pressed to enable/disable the command?")]
         private KeyCode showConsoleKey = KeyCode.BackQuote;
 
-        private CanvasGroup canvasGroup;
+        [Header("UI")]
+        [SerializeField, Tooltip("Which Developr Console should be managed?")]
+        private GameObject developerConsole;
+
         private bool isConsoleShowing;
 
-        private void Start() {
-            canvasGroup = GetComponent<CanvasGroup>();
-
-            // Disable the console at Start
-            DisableConsole();
+        private void Awake() {
+            // Disable the Console immediately.
+            SetConsoleState(false);
         }
 
         private void Update() {
             if(Input.GetKeyUp(showConsoleKey)) {
                 if(!isConsoleShowing) {
-                    EnableConsole();
+                    SetConsoleState(true);
                 } else {
-                    DisableConsole();
+                    SetConsoleState(false);
                 }
             }
         }
 
-        private void DisableConsole() {
-            canvasGroup.alpha = 0f;
-            canvasGroup.blocksRaycasts = canvasGroup.interactable = isConsoleShowing = false;
+        private void SetConsoleState(bool isShowing) {
+            developerConsole.active = isConsoleShowing = isShowing;
         }
-
-        private void EnableConsole() {
-            canvasGroup.alpha = 1f;
-            canvasGroup.blocksRaycasts = canvasGroup.interactable = isConsoleShowing = true;
-        }
-
     }
 }
