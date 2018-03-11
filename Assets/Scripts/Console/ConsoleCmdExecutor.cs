@@ -20,6 +20,5 @@ namespace DeveloperConsole {
             }
 #endif
         }
-
     }
 }
