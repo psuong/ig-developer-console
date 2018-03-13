@@ -16,12 +16,6 @@ namespace GlobalEvents {
             return d;
         }
 
-        private static IDictionary<string, Delegate> GetRelativeEventTable(object key) {
-            IDictionary<string, Delegate> eventTable;
-            relativeEventTable.TryGetValue(key, out eventTable);
-            return eventTable;
-        }
-
         private static void SubscribeEvent(string eventName, Delegate handler) {
             Delegate d;
             if (globalEventTable.TryGetValue(eventName, out d)) {
