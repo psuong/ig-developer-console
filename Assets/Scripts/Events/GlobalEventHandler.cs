@@ -9,7 +9,6 @@ namespace GlobalEvents {
     public static class GlobalEventHandler {
 
         private static IDictionary<string, Delegate> globalEventTable = new Dictionary<string, Delegate>();
-        private static IDictionary<object, IDictionary<string, Delegate>> relativeEventTable = new Dictionary<object, IDictionary<string, Delegate>>();
 
         private static Delegate GetDelegate(string eventName, IDictionary<string, Delegate> eventTable) {
             Delegate d;
@@ -130,7 +129,9 @@ namespace GlobalEvents {
         /// <summary>
         /// Registers a function to the global event table with four arguments.
         /// </summary>
-        public static void SubscribeEvent<T1, T2, T3>(String eventName, Action<T1, T2, T3, T4> action) {
+        /// <param name="eventName">The identifier for the event to register.</param>
+        /// <param name="action">The function to register with four arguments.</param>
+        public static void SubscribeEvent<T1, T2, T3, T4>(String eventName, Action<T1, T2, T3, T4> action) {
             SubscribeEvent(eventName, action as Delegate);
         }
 
