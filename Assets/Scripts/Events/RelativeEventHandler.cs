@@ -7,7 +7,7 @@ namespace GlobalEvents {
 
     public static class RelativeEventHandler {
 
-        private static IDictionary<Object, IDictionary<string, Delegate>> relativeEventTable;
+        private static IDictionary<Object, IDictionary<string, Delegate>> relativeEventTable = new Dictionary<Object, IDictionary<string, Delegate>>();
 
         private static Delegate GetDelegate(string eventName, IDictionary<string, Delegate> eventTable) {
             var d = default(Delegate);
@@ -25,6 +25,12 @@ namespace GlobalEvents {
         }
 
         private static void SubscribeEvent(Object obj, string eventName, Delegate handler) {
+            if (obj == null) {
+#if UNITY_EDITOR
+                UnityEngine.Debug.LogError("Cannot subscribe an event to a null object!");
+#endif
+                return;
+            }
             var eventTable = default(IDictionary<string, Delegate>);
             if (relativeEventTable.TryGetValue(obj, out eventTable)) {
                 SubscribeEvent(eventTable, eventName, handler);
@@ -57,6 +63,16 @@ namespace GlobalEvents {
         /// <param name="action">The function to register.</param>
         public static void SubscribeEvent(Object obj, string eventName, Action action) {
             SubscribeEvent(obj, eventName, action as Delegate);
+        }
+        
+        /// <summary>
+        /// Deregisters a Unity Object and its associated event from the relative event table.
+        /// </summary>
+        /// <param name="obj">the object to deregister.</param>
+        /// <param name="eventName">The identifier for the event.</param>
+        /// <param name="action">The function to remove.</param>
+        public static void UnsubscribeEvent(Object obj, string eventName, Action action) {
+            UnsubscribeEvent(obj, eventName, action as Delegate);
         }
     }
 }
