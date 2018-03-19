@@ -11,7 +11,8 @@ namespace DeveloperConsole {
         /// </summary>
         /// <param name="input">The user's input</param>
         public void TryExecuteCommand(string input) {
-            if (GlobalEventHandler.IsEventSubscribed(input)) {
+            var trimmedInput = input.Trim();
+            if (GlobalEventHandler.IsEventSubscribed(trimmedInput)) {
                 GlobalEventHandler.InvokeEvent(input);
             } 
 #if UNITY_EDITOR

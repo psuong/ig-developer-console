@@ -80,7 +80,5 @@ namespace DeveloperConsole {
         public string GetRecentCommand() {
             return (commandHistory.Count > 0) ? commandHistory[currentIndex] : string.Empty;
         }
-
     }
-
 }
