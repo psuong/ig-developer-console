@@ -56,6 +56,21 @@ namespace GlobalEvents {
         }
         
         /// <summary>
+        /// Invokes an event relative to the Object given an event identifier.
+        /// </summary>
+        /// <param name="obj">The object which is subscribe to a relative event.</param>
+        /// <param name="eventName">The event to invoke.</param>
+        public static void InvokeEvent(Object obj, string eventName) {
+            var relativeEvent = default(IDictionary<string, Delegate>);
+            if (relativeEventTable.TryGetValue(obj, out relativeEvent)) {
+                var action = GetDelegate(eventName, relativeEvent) as Action;
+                if (action != null) {
+                    action();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Registers a Unity Object and its associated event to the relative event table.
         /// </summary>
         /// <param name="obj">The object to subscribe.</param>
