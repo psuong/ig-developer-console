@@ -8,7 +8,7 @@
         /// <summary>
         /// A readonly constant global event name for adding an output to the DeveloperConsole.
         /// </summary>
-        public readonly static string AddOutputEventName = "Add Output";
+        public readonly static string AddOutputEventName = "AddOutput";
 
     }
 }
