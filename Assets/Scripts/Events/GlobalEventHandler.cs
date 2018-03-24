@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace GlobalEvents {
 
+    using Regex = System.Text.RegularExpressions.Regex;
+
     /// <summary>
     /// Stores global events to be freely accessed on a global level.
     /// </summary>

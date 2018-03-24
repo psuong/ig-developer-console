@@ -2,10 +2,12 @@
 
 namespace GlobalEvents {
 
+    using DeveloperConsole.Utility;
+    using Type = System.Type;
+
     /// <summary>
     /// A class which handles parsing arguments to ensure validity of the arguments passed.
     /// </summary>
-    [System.Serializable]
     internal class ArgParser {
 
         internal readonly Regex eventNameRegex;
@@ -16,7 +18,7 @@ namespace GlobalEvents {
         internal ArgParser() {
             eventNameRegex  = new Regex(@"\s");
             intRegex        = new Regex(@"^\d$");
-            floatRegex      = new Regex(@"^[0-9]*(?:\.[0-9]*)?*?(f)$");
+            floatRegex      = new Regex(@"^[0-9]*(?:\.[0-9]*(f)*?)?$");
             stringRegex     = new Regex(@"^.+");
         }
 
@@ -27,6 +29,38 @@ namespace GlobalEvents {
             stringRegex     = new Regex(@stringPattern);
         }
 
+        private Tuple<Type, object> GetArgumentTypeValue(string arg) {
+            if (intRegex.IsMatch(arg)) {
+                return Tuple<Type, object>.Create(typeof(int), arg);
+            } else if (floatRegex.IsMatch(arg)) {
+                return Tuple<Type, object>.Create(typeof(float), arg);
+            } else if (stringRegex.IsMatch(arg)) {
+                return Tuple<Type, object>.Create(typeof(string), arg);
+            }
+            return Tuple<Type, object>.Create(typeof(void), null);
+        }
+
+        /// <summary>
+        /// Checks if the argument is considered an integer type.
+        /// </summary>
+        private bool IsArgInt(string arg) {
+            return intRegex.IsMatch(arg);
+        }
+        
+        /// <summary>
+        /// Checks if the argument is considered a valid float value.
+        /// </summary>
+        private bool IsArgFloat(string arg) {
+            return floatRegex.IsMatch(arg);
+        }
+        
+        /// <summary>
+        /// Checks if the argument is considered a valid float value≥
+        /// </summary>
+        private bool IsArgString(string arg) {
+            return stringRegex.IsMatch(arg);
+        }
+
         /// <summary>
         /// Checks if the eventName is valid.
         /// </summary>
@@ -34,26 +68,23 @@ namespace GlobalEvents {
         internal bool IsEventNameValid(string eventName) {
             return !eventNameRegex.IsMatch(eventName);
         }
+        
+        /// <summary>
+        /// Builds the invocation call arguments for the invokeEvent<T...> call.
+        /// </summary>
+        internal Tuple<Type, object>[] BuildInvokationArgs(string[] args) {
+            var argLength = args.Length;
+            var arguments = new Tuple<Type, object>[argLength];
 
-        /// <summary>
-        /// Checks if the argument is considered an integer type.
-        /// </summary>
-        internal bool IsArgInt(string arg) {
-            return intRegex.IsMatch(arg);
+            for(int i = 0; i < argLength; i++) {
+                arguments[i] = GetArgumentTypeValue(args[i]);
+            }
+
+            return arguments;
         }
-        
-        /// <summary>
-        /// Checks if the argument is considered a valid float value.
-        /// </summary>
-        internal bool IsArgFloat(string arg) {
-            return floatRegex.IsMatch(arg);
-        }
-        
-        /// <summary>
-        /// Checks if the argument is considered a valid float value≥
-        /// </summary>
-        internal bool IsArgString(string arg) {
-            return stringRegex.IsMatch(arg);
+
+        internal T GetArgument<T>(object arg) {
+            return (T) System.Convert.ChangeType(arg, typeof(T));
         }
     }
 }
