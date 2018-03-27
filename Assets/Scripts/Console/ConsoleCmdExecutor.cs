@@ -30,7 +30,6 @@ namespace DeveloperConsole {
         /// <param name="input">The user's input</param>
         public void TryExecuteCommand(string input) {
             string trimmedInput = input.Trim();
-            var args = GetArguments(trimmedInput, delimiter);
             // TODO: Swap the direct call with a safe invoke call
             if (GlobalEventHandler.IsEventSubscribed(trimmedInput)) {
                 GlobalEventHandler.InvokeEvent(input);

@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace GlobalEvents {
 
@@ -29,15 +30,12 @@ namespace GlobalEvents {
             stringRegex     = new Regex(@stringPattern);
         }
 
-        private Tuple<Type, object> GetArgumentTypeValue(string arg) {
-            if (intRegex.IsMatch(arg)) {
-                return Tuple<Type, object>.Create(typeof(int), arg);
-            } else if (floatRegex.IsMatch(arg)) {
-                return Tuple<Type, object>.Create(typeof(float), arg);
-            } else if (stringRegex.IsMatch(arg)) {
-                return Tuple<Type, object>.Create(typeof(string), arg);
-            }
-            return Tuple<Type, object>.Create(typeof(void), null);
+        private float GetFloatArg(string arg) {
+            return float.Parse(arg);
+        }
+
+        private int GetIntArg(string arg) {
+            return int.Parse(arg);
         }
 
         /// <summary>
@@ -46,14 +44,14 @@ namespace GlobalEvents {
         private bool IsArgInt(string arg) {
             return intRegex.IsMatch(arg);
         }
-        
+
         /// <summary>
         /// Checks if the argument is considered a valid float value.
         /// </summary>
         private bool IsArgFloat(string arg) {
             return floatRegex.IsMatch(arg);
         }
-        
+
         /// <summary>
         /// Checks if the argument is considered a valid float value≥
         /// </summary>
@@ -68,23 +66,15 @@ namespace GlobalEvents {
         internal bool IsEventNameValid(string eventName) {
             return !eventNameRegex.IsMatch(eventName);
         }
-        
-        /// <summary>
-        /// Builds the invocation call arguments for the invokeEvent<T...> call.
-        /// </summary>
-        internal Tuple<Type, object>[] BuildInvokationArgs(string[] args) {
-            var argLength = args.Length;
-            var arguments = new Tuple<Type, object>[argLength];
 
-            for(int i = 0; i < argLength; i++) {
-                arguments[i] = GetArgumentTypeValue(args[i]);
+        internal object GetArgument(string arg) {
+            if (IsArgInt(arg)) {
+                return System.Int32.Parse(arg) as int;
+            } else if (IsArgFloat(arg)) {
+                return float.Parse(arg) as float;
+            } else {
+                return arg;
             }
-
-            return arguments;
-        }
-
-        internal T GetArgument<T>(object arg) {
-            return (T) System.Convert.ChangeType(arg, typeof(T));
         }
     }
 }

@@ -41,7 +41,7 @@ namespace GlobalEvents {
         }
         
         /// <summary> 
-        /// Invokes a function registered event within the global event table.
+        /// Invokes a function registered within the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event.</param>
         public static void InvokeEvent(string eventName) {
@@ -118,6 +118,15 @@ namespace GlobalEvents {
         /// <param name="eventName">The identifier for the event to register.</param>
         /// <param name="action">The function to register.</param>
         public static void SubscribeEvent(string eventName, Action action) {
+            SubscribeEvent(eventName, action as Delegate);
+        }
+
+        /// <summary>
+        /// Registers a function to the global event table.
+        /// </summary>
+        /// <param name="eventName">The identifier for the event to register.</param>
+        /// <param name="action">The function to register with one argument.</param>
+        public static void SubscribeEvent<T1>(string eventName, Action<T1> action) {
             SubscribeEvent(eventName, action as Delegate);
         }
         
