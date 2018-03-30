@@ -58,6 +58,7 @@ namespace GlobalEvents {
         public static void InvokeEvent<T1>(string eventName, T1 arg1) {
             var action = GetDelegate(eventName, globalEventTable) as Action<T1>;
             if (action != null) {
+                UnityEngine.Debug.Log(arg1);
                 action(arg1);
             }
         }

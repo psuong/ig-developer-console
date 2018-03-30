@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 namespace DeveloperConsole {
 
@@ -15,12 +16,8 @@ namespace DeveloperConsole {
             argParser = new ArgParser();
         }
 
-        private string[] GetArguments(string input) {
-            return input.Split(delimiter);
-        }
-
-        private void SafeInvoke(string[] args, int argLength) {
-            // TODO: Implement a SafeInvoke call to execute events
+        private void SafeInvoke(string arg) {
+            // TODO: Figure out a way to safely invoke global events.
             throw new System.NotImplementedException();
         }
 
@@ -30,15 +27,7 @@ namespace DeveloperConsole {
         /// <param name="input">The user's input</param>
         public void TryExecuteCommand(string input) {
             string trimmedInput = input.Trim();
-            // TODO: Swap the direct call with a safe invoke call
-            if (GlobalEventHandler.IsEventSubscribed(trimmedInput)) {
-                GlobalEventHandler.InvokeEvent(input);
-            } 
-#if UNITY_EDITOR
-            else {
-                Debug.LogWarningFormat("No event registered with the ID: {0}", input);
-            }
-#endif
+            SafeInvoke(trimmedInput);
         }
     }
 }

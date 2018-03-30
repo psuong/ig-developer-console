@@ -1,10 +1,8 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 namespace GlobalEvents {
-
-    using DeveloperConsole.Utility;
-    using Type = System.Type;
 
     /// <summary>
     /// A class which handles parsing arguments to ensure validity of the arguments passed.
@@ -66,12 +64,12 @@ namespace GlobalEvents {
         internal bool IsEventNameValid(string eventName) {
             return !eventNameRegex.IsMatch(eventName);
         }
-
+        
         internal object GetArgument(string arg) {
             if (IsArgInt(arg)) {
-                return System.Int32.Parse(arg) as int;
+                return Convert.ChangeType(arg, typeof(int));
             } else if (IsArgFloat(arg)) {
-                return float.Parse(arg) as float;
+                return Convert.ChangeType(arg, typeof(float));
             } else {
                 return arg;
             }
