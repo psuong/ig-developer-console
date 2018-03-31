@@ -11,7 +11,6 @@ namespace GlobalEvents {
     public static class GlobalEventHandler {
 
         private static IDictionary<string, Delegate> globalEventTable = new Dictionary<string, Delegate>();
-        private static ArgParser argParser = new ArgParser();
 
         private static Delegate GetDelegate(string eventName, IDictionary<string, Delegate> eventTable) {
             Delegate d;
@@ -20,11 +19,6 @@ namespace GlobalEvents {
         }
 
         private static void SubscribeEvent(string eventName, Delegate handler) {
-            if (!argParser.IsEventNameValid(eventName)) {
-#if UNITY_EDITOR
-                UnityEngine.Debug.LogErrorFormat("{0} is not a valid eventName, there should not be any spaces!", eventName);
-#endif
-            }
             Delegate d;
             if (globalEventTable.TryGetValue(eventName, out d)) {
                 globalEventTable[eventName] = Delegate.Combine(d, handler);

@@ -1,8 +1,20 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace GlobalEvents {
+    
+    /// <summary>
+    /// Represents the types feasible parameter arguments.
+    /// </summary>
+    internal enum ArgType {
+        Default,
+        Bool,
+        Int,
+        Float,
+        Char,
+        String
+    }
 
     /// <summary>
     /// A class which handles parsing arguments to ensure validity of the arguments passed.
@@ -28,31 +40,34 @@ namespace GlobalEvents {
             stringRegex     = new Regex(@stringPattern);
         }
 
-        private float GetFloatArg(string arg) {
+        private bool GetBoolValue(string arg) {
+            return (arg.ToLower() == "true");
+        }
+
+        private int GetIntValue(string arg) {
+            return Int32.Parse(arg);
+        }
+
+        private float GetFloatValue(String arg) {
             return float.Parse(arg);
         }
 
-        private int GetIntArg(string arg) {
-            return int.Parse(arg);
+        private String GetStringValue(String arg) {
+            return arg;
         }
 
-        /// <summary>
-        /// Checks if the argument is considered an integer type.
-        /// </summary>
+        private Char GetCharValue(String arg) {
+            throw new NotImplementedException();
+        }
+
         private bool IsArgInt(string arg) {
             return intRegex.IsMatch(arg);
         }
 
-        /// <summary>
-        /// Checks if the argument is considered a valid float value.
-        /// </summary>
         private bool IsArgFloat(string arg) {
             return floatRegex.IsMatch(arg);
         }
 
-        /// <summary>
-        /// Checks if the argument is considered a valid float value≥
-        /// </summary>
         private bool IsArgString(string arg) {
             return stringRegex.IsMatch(arg);
         }
@@ -65,14 +80,20 @@ namespace GlobalEvents {
             return !eventNameRegex.IsMatch(eventName);
         }
         
-        internal object GetArgument(string arg) {
+        /// <summary>
+        /// Returns an accompanying ArgType based on the arg input.
+        /// </summary>
+        /// <param name="arg">The input type of the argument.</param>
+        /// <returns>ArgType</returns>
+        internal ArgType GetArgType(String arg) {
             if (IsArgInt(arg)) {
-                return Convert.ChangeType(arg, typeof(int));
+                return ArgType.Int;
             } else if (IsArgFloat(arg)) {
-                return Convert.ChangeType(arg, typeof(float));
-            } else {
-                return arg;
-            }
+                return ArgType.Float;
+            } else if (IsArgString(arg)) {
+                return ArgType.String;
+            } 
+            return ArgType.Default;
         }
     }
 }

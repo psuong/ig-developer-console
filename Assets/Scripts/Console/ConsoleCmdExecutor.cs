@@ -16,9 +16,8 @@ namespace DeveloperConsole {
             argParser = new ArgParser();
         }
 
-        private void SafeInvoke(string arg) {
-            // TODO: Figure out a way to safely invoke global events.
-            throw new System.NotImplementedException();
+        private void SafeInvoke(string args) {
+            var arguments = args.Split(delimiter);
         }
 
         /// <summary>
