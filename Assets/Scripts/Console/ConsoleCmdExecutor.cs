@@ -16,8 +16,31 @@ namespace DeveloperConsole {
             argParser = new ArgParser();
         }
 
-        private void SafeInvoke(string args) {
-            var arguments = args.Split(delimiter);
+        private void SafeInvoke(string argv) {
+            var args = argv.Split(delimiter);
+            var eventName = args[0];
+
+            switch(args.Length) {
+                case 1:
+                    GlobalEventHandler.InvokeEvent(eventName);
+                    return;
+                case 2:
+                    GlobalEventHandler.InvokeEvent(eventName, argParser.GetArgValue(args[1]));
+                    return;
+                case 3:
+                    GlobalEventHandler.InvokeEvent(eventName, argParser.GetArgValue(args[1]), argParser.GetArgValue(args[2]));
+                    return;
+                case 4:
+                    GlobalEventHandler.InvokeEvent(eventName, argParser.GetArgValue(args[1]), argParser.GetArgValue(args[2]), argParser.GetArgValue(args[3]));
+                    return;
+                case 5:
+                    GlobalEventHandler.InvokeEvent(eventName, argParser.GetArgValue(args[1]), argParser.GetArgValue(args[2]), argParser.GetArgValue(args[3]));
+                    return;
+                case 6:
+                    GlobalEventHandler.InvokeEvent(eventName, argParser.GetArgValue(args[1]), argParser.GetArgValue(args[2]), argParser.GetArgValue(args[3]), argParser.GetArgValue(args[4]));
+                    return;
+                
+            }
         }
 
         /// <summary>
