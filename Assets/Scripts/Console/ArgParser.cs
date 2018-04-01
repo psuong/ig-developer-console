@@ -47,13 +47,23 @@ namespace GlobalEvents {
         }
 
         /// <summary>
-        /// Checks if the eventName is valid.
+        /// Checks if the eventName has no spaces in between the value.
         /// </summary>
         /// <returns>True, if there is no space within the eventName".</returns>
         internal bool IsEventNameValid(string eventName) {
             return !eventNameRegex.IsMatch(eventName);
         }
-
+        
+        /// <summary>
+        /// Dynamically returns the value of the string to one of following the known types.
+        /// Bool
+        /// Char
+        /// Float
+        /// Int
+        /// String
+        /// </summary>
+        /// <param name="value">The value to interpret and parse.</param>
+        /// <returns>The interpretted dynamically typed value.</param>
         internal dynamic GetArgValue(String value) {
             if (IsArgInt(value)) {
                 return int.Parse(value);
