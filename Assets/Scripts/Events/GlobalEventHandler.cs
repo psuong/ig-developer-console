@@ -42,6 +42,17 @@ namespace GlobalEvents {
                 action();
             }
         }
+        
+        /// <summary>
+        /// </summary>
+        /// <param name="eventName">The identifier for the event.</param>
+        /// <param name="arg1">The first argument to invoke the global event.</param>
+        public static void InvokeEvent<T1>(string eventName, T1 arg1) {
+            var action = GetDelegate(eventName, globalEventTable) as Action<T1>;
+            if (action != null) {
+                action(arg1);
+            }
+        }
 
         /// <summary> 
         /// Invokes a registered event within the global event table using two arguments.
@@ -106,6 +117,14 @@ namespace GlobalEvents {
         /// Registers a function to the global event table with two arguements.
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
+        public static void SubscribeEvent<T1>(string eventName, Action<T1> action) {
+            SubscribeEvent(eventName, action as Delegate);
+        }
+        
+        /// <summary>
+        /// Registers a function to the global event table with two arguements.
+        /// </summary>
+        /// <param name="eventName">The identifier for the event to register.</param>
         /// <param name="action">The function to register with two arguments.</param>
         public static void SubscribeEvent<T1, T2>(String eventName, Action<T1, T2> action) {
             SubscribeEvent(eventName, action as Delegate);
@@ -137,9 +156,18 @@ namespace GlobalEvents {
         public static void UnsubscribeEvent(string eventName, Action action) {
             UnsubscribeEvent(eventName, action as Delegate);
         }
-        
+
         /// <summary>
-        /// Unregisters a function from the global event table.
+        /// Unregisters a function with one argument from the global event table.
+        /// </summary>
+        /// <param name="eventName">The identifier for the event to remove.</param>
+        /// <param name="action">The function to remove.</param>
+        public static void UnsubscribeEvent<T1>(string eventName, Action<T1> action) {
+            UnsubscribeEvent(eventName, action as Delegate);
+        }
+
+        /// <summary>
+        /// Unregisters a function with two arguments from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
         /// <param name="action">The function to remove.</param>
@@ -148,7 +176,7 @@ namespace GlobalEvents {
         }
 
         /// <summary>
-        /// Unregisters a function from the global event table.
+        /// Unregisters a function with three arguments from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
         /// <param name="action">The function to remove.</param>
@@ -157,7 +185,7 @@ namespace GlobalEvents {
         }
 
         /// <summary>
-        /// Unregisters a function from the global event table.
+        /// Unregisters a function with four arguments from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
         /// <param name="action">The function to remove.</param>
