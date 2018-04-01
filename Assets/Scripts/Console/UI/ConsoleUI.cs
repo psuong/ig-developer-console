@@ -30,7 +30,8 @@ namespace DeveloperConsole.UI {
         }
 
         private void SetConsoleState(bool isShowing) {
-            developerConsole.active = isConsoleShowing = isShowing;
+            isConsoleShowing = isShowing;
+            developerConsole.SetActive(isShowing);
         }
     }
 }

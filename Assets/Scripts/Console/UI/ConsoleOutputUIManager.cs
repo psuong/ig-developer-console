@@ -50,8 +50,8 @@ namespace DeveloperConsole.UI {
 
         private Text CreateOutputMessage(string message, Color textColor) {
             var output = Instantiate(outputTextTemplate, textOutputParent);
-            output.text = message;
             output.color = textColor;
+            output.text = string.Format("#{0}. {1}", consoleOutputs.Count + 1, message);
             return output;
         }
 
