@@ -129,14 +129,6 @@ namespace GlobalEvents {
         /// Registers a function to the global event table with two arguements.
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
-        public static void SubscribeEvent<T1>(string eventName, Action<T1> action) {
-            SubscribeEvent(eventName, action as Delegate);
-        }
-        
-        /// <summary>
-        /// Registers a function to the global event table with two arguements.
-        /// </summary>
-        /// <param name="eventName">The identifier for the event to register.</param>
         /// <param name="action">The function to register with two arguments.</param>
         public static void SubscribeEvent<T1, T2>(String eventName, Action<T1, T2> action) {
             SubscribeEvent(eventName, action as Delegate);
