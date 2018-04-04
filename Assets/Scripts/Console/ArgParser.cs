@@ -86,6 +86,8 @@ namespace DeveloperConsole {
                         GetParameterValue(args[2]),
                         GetParameterValue(args[3])
                     };
+                default:
+                    return new object[] {};
             }
         }
     }
