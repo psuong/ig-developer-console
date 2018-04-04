@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GlobalEvents {
 
@@ -10,9 +11,9 @@ namespace GlobalEvents {
 
         private static IDictionary<string, Delegate> globalEventTable = new Dictionary<string, Delegate>();
 
-        private static Delegate GetDelegate(string eventName, IDictionary<string, Delegate> eventTable) {
+        private static Delegate GetDelegate(string eventName) {
             Delegate d;
-            eventTable.TryGetValue(eventName, out d);
+            globalEventTable.TryGetValue(eventName, out d);
             return d;
         }
 
@@ -31,24 +32,42 @@ namespace GlobalEvents {
                 globalEventTable[eventName] = Delegate.Remove(d, handler);
             }
         }
-        
+
+        /// <summary>
+        /// Invokes a function via reflections. This is used for .NET 3.5 only.
+        /// </summary>
+        /// <param name="type">The type of the object.</param>
+        /// <param name="instance">The instane of the object to invoke.</param>
+        /// <param name="methodName">The name of the method to invoke.</param>
+        /// <param name="args">The function parameters used to invoke.</param>
+        public static void InvokeEvent(Type type, Object instance, string methodName, params object[] args) {
+            try {
+                MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+                methodInfo.Invoke(instance, new object[] { System.Convert.ChangeType(args[0], typeof(float)) });
+            } catch (System.Exception err) {
+#if UNITY_EDITOR
+                UnityEngine.Debug.LogError(err);
+#endif
+            }
+        }
+
         /// <summary> 
         /// Invokes a function registered event within the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event.</param>
         public static void InvokeEvent(string eventName) {
-            var action = GetDelegate(eventName, globalEventTable) as Action;
+            var action = GetDelegate(eventName) as Action;
             if (action != null) {
                 action();
             }
         }
-        
+
         /// <summary>
         /// </summary>
         /// <param name="eventName">The identifier for the event.</param>
         /// <param name="arg1">The first argument to invoke the global event.</param>
         public static void InvokeEvent<T1>(string eventName, T1 arg1) {
-            var action = GetDelegate(eventName, globalEventTable) as Action<T1>;
+            var action = GetDelegate(eventName) as Action<T1>;
             if (action != null) {
                 action(arg1);
             }
@@ -61,7 +80,7 @@ namespace GlobalEvents {
         /// <param name="arg1">The first argument to invoke the global event.</param>
         /// <param name="arg2">The second argument to invoke the global event.</param>
         public static void InvokeEvent<T1, T2>(string eventName, T1 arg1, T2 arg2) {
-            var action = GetDelegate(eventName, globalEventTable) as Action<T1, T2>;
+            var action = GetDelegate(eventName) as Action<T1, T2>;
             if (action != null) {
                 action(arg1, arg2);
             }
@@ -75,7 +94,7 @@ namespace GlobalEvents {
         /// <param name="arg2">The second argument to invoke the global event.</param>
         /// <param name="arg3">The third argument to invoke the global event.</param>
         public static void InvokeEvent<T1, T2, T3>(string eventName, T1 arg1, T2 arg2, T3 arg3) {
-            var action = GetDelegate(eventName, globalEventTable) as Action<T1, T2, T3>;
+            var action = GetDelegate(eventName) as Action<T1, T2, T3>;
             if (action != null) {
                 action(arg1, arg2, arg3);
             }
@@ -90,7 +109,7 @@ namespace GlobalEvents {
         /// <param name="arg3">The third argument to invoke the global event.</param>
         /// <param name="arg4">The fourth argument to invoke the glboal event.</param>
         public static void InvokeEvent<T1, T2, T3, T4>(string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
-            var action = GetDelegate(eventName, globalEventTable) as Action<T1, T2, T3, T4>;
+            var action = GetDelegate(eventName) as Action<T1, T2, T3, T4>;
             if (action != null) {
                 action(arg1, arg2, arg3, arg4);
             }
@@ -103,7 +122,7 @@ namespace GlobalEvents {
         public static bool IsEventSubscribed(string eventName) {
             return globalEventTable.ContainsKey(eventName);
         }
-        
+
         /// <summary>
         /// Registers a function to the global event table.
         /// </summary>
@@ -112,7 +131,7 @@ namespace GlobalEvents {
         public static void SubscribeEvent(string eventName, Action action) {
             SubscribeEvent(eventName, action as Delegate);
         }
-        
+
         /// <summary>
         /// Registers a function to the global event table with two arguements.
         /// </summary>
@@ -120,7 +139,7 @@ namespace GlobalEvents {
         public static void SubscribeEvent<T1>(string eventName, Action<T1> action) {
             SubscribeEvent(eventName, action as Delegate);
         }
-        
+
         /// <summary>
         /// Registers a function to the global event table with two arguements.
         /// </summary>
@@ -129,7 +148,7 @@ namespace GlobalEvents {
         public static void SubscribeEvent<T1, T2>(String eventName, Action<T1, T2> action) {
             SubscribeEvent(eventName, action as Delegate);
         }
-        
+
         /// <summary>
         /// Registers a function to the global event table with three arguments.
         /// </summary>
@@ -138,7 +157,7 @@ namespace GlobalEvents {
         public static void SubscribeEvent<T1, T2, T3>(String eventName, Action<T1, T2, T3> action) {
             SubscribeEvent(eventName, action as Delegate);
         }
-        
+
         /// <summary>
         /// Registers a function to the global event table with four arguments.
         /// </summary>
