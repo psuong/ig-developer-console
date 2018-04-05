@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace DeveloperConsole {
@@ -64,10 +63,16 @@ namespace DeveloperConsole {
             return !eventNameRegex.IsMatch(eventName);
         }
         
+        /// <summary>
+        /// Parses all parameters into their value types.
+        /// </summary>
+        /// <returns>An array of objects with their value parsed counterparts.</returns>
         internal object[] ParseParameters(string[] args) {
             switch(args.Length) {
                 case 1:
-                    return new object[] { GetParameterValue(args[0]) };
+                    return new object[] { 
+                        GetParameterValue(args[0])
+                    };
                 case 2:
                     return new object[] { 
                         GetParameterValue(args[0]),
@@ -84,7 +89,15 @@ namespace DeveloperConsole {
                         GetParameterValue(args[0]),
                         GetParameterValue(args[1]),
                         GetParameterValue(args[2]),
-                        GetParameterValue(args[3])
+                        GetParameterValue(args[3]),
+                    };
+                case 5:
+                    return new object[] {
+                        GetParameterValue(args[0]),
+                        GetParameterValue(args[1]),
+                        GetParameterValue(args[2]),
+                        GetParameterValue(args[3]),
+                        GetParameterValue(args[4])
                     };
                 default:
                     return new object[] {};
