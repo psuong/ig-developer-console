@@ -38,7 +38,7 @@ namespace DeveloperConsole {
             var length = args.Length - startIndex;
             var copyIndex = 0;
             var remainingArgs = new string[length];
-            for(int i = startIndex; i < length; ++i) {
+            for(int i = startIndex; i < args.Length; ++i) {
                 remainingArgs[copyIndex] = args[i];
                 ++copyIndex;
             }
@@ -54,7 +54,8 @@ namespace DeveloperConsole {
         }
 
         /// <summary>
-        /// Executes a delegate within the global event table if it exists.
+        /// Executes a registered method within the event tables. If only one argument is parsed
+        /// then the Global Event Table is executed.
         /// </summary>
         /// <param name="input">The user's input</param>
         public void TryExecuteCommand(string input) {
