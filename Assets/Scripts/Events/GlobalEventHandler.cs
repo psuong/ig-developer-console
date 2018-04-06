@@ -10,9 +10,9 @@ namespace GlobalEvents {
 
         private static IDictionary<string, Delegate> globalEventTable = new Dictionary<string, Delegate>();
 
-        private static Delegate GetDelegate(string eventName, IDictionary<string, Delegate> eventTable) {
+        private static Delegate GetDelegate(string eventName) {
             Delegate d;
-            eventTable.TryGetValue(eventName, out d);
+            globalEventTable.TryGetValue(eventName, out d);
             return d;
         }
 
@@ -31,24 +31,24 @@ namespace GlobalEvents {
                 globalEventTable[eventName] = Delegate.Remove(d, handler);
             }
         }
-        
+
         /// <summary> 
-        /// Invokes a function registered event within the global event table.
+        /// Invokes a method registered event within the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event.</param>
         public static void InvokeEvent(string eventName) {
-            var action = GetDelegate(eventName, globalEventTable) as Action;
+            var action = GetDelegate(eventName) as Action;
             if (action != null) {
                 action();
             }
         }
-        
+
         /// <summary>
         /// </summary>
         /// <param name="eventName">The identifier for the event.</param>
         /// <param name="arg1">The first argument to invoke the global event.</param>
         public static void InvokeEvent<T1>(string eventName, T1 arg1) {
-            var action = GetDelegate(eventName, globalEventTable) as Action<T1>;
+            var action = GetDelegate(eventName) as Action<T1>;
             if (action != null) {
                 action(arg1);
             }
@@ -61,7 +61,7 @@ namespace GlobalEvents {
         /// <param name="arg1">The first argument to invoke the global event.</param>
         /// <param name="arg2">The second argument to invoke the global event.</param>
         public static void InvokeEvent<T1, T2>(string eventName, T1 arg1, T2 arg2) {
-            var action = GetDelegate(eventName, globalEventTable) as Action<T1, T2>;
+            var action = GetDelegate(eventName) as Action<T1, T2>;
             if (action != null) {
                 action(arg1, arg2);
             }
@@ -75,7 +75,7 @@ namespace GlobalEvents {
         /// <param name="arg2">The second argument to invoke the global event.</param>
         /// <param name="arg3">The third argument to invoke the global event.</param>
         public static void InvokeEvent<T1, T2, T3>(string eventName, T1 arg1, T2 arg2, T3 arg3) {
-            var action = GetDelegate(eventName, globalEventTable) as Action<T1, T2, T3>;
+            var action = GetDelegate(eventName) as Action<T1, T2, T3>;
             if (action != null) {
                 action(arg1, arg2, arg3);
             }
@@ -90,7 +90,7 @@ namespace GlobalEvents {
         /// <param name="arg3">The third argument to invoke the global event.</param>
         /// <param name="arg4">The fourth argument to invoke the glboal event.</param>
         public static void InvokeEvent<T1, T2, T3, T4>(string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
-            var action = GetDelegate(eventName, globalEventTable) as Action<T1, T2, T3, T4>;
+            var action = GetDelegate(eventName) as Action<T1, T2, T3, T4>;
             if (action != null) {
                 action(arg1, arg2, arg3, arg4);
             }
@@ -103,92 +103,93 @@ namespace GlobalEvents {
         public static bool IsEventSubscribed(string eventName) {
             return globalEventTable.ContainsKey(eventName);
         }
-        
+
         /// <summary>
-        /// Registers a function to the global event table.
+        /// Registers a method to the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
-        /// <param name="action">The function to register.</param>
+        /// <param name="action">The method to register.</param>
         public static void SubscribeEvent(string eventName, Action action) {
             SubscribeEvent(eventName, action as Delegate);
         }
-        
+
         /// <summary>
-        /// Registers a function to the global event table with two arguements.
+        /// Registers a method to the global event table with two arguements.
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
+        /// <param name="action">The method to register with one argument.</param>
         public static void SubscribeEvent<T1>(string eventName, Action<T1> action) {
             SubscribeEvent(eventName, action as Delegate);
         }
-        
+
         /// <summary>
-        /// Registers a function to the global event table with two arguements.
+        /// Registers a method to the global event table with two arguements.
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
-        /// <param name="action">The function to register with two arguments.</param>
+        /// <param name="action">The method to register with two arguments.</param>
         public static void SubscribeEvent<T1, T2>(String eventName, Action<T1, T2> action) {
             SubscribeEvent(eventName, action as Delegate);
         }
-        
+
         /// <summary>
-        /// Registers a function to the global event table with three arguments.
+        /// Registers a method to the global event table with three arguments.
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
-        /// <param name="action">The function to register with three arguments.</param>
+        /// <param name="action">The method to register with three arguments.</param>
         public static void SubscribeEvent<T1, T2, T3>(String eventName, Action<T1, T2, T3> action) {
             SubscribeEvent(eventName, action as Delegate);
         }
-        
+
         /// <summary>
-        /// Registers a function to the global event table with four arguments.
+        /// Registers a method to the global event table with four arguments.
         /// </summary>
         /// <param name="eventName">The identifier for the event to register.</param>
-        /// <param name="action">The function to register with four arguments.</param>
+        /// <param name="action">The method to register with four arguments.</param>
         public static void SubscribeEvent<T1, T2, T3, T4>(String eventName, Action<T1, T2, T3, T4> action) {
             SubscribeEvent(eventName, action as Delegate);
         }
 
         /// <summary>
-        /// Unregisters a function from the global event table.
+        /// Unregisters a method from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
-        /// <param name="action">The function to remove.</param>
+        /// <param name="action">The method to remove.</param>
         public static void UnsubscribeEvent(string eventName, Action action) {
             UnsubscribeEvent(eventName, action as Delegate);
         }
 
         /// <summary>
-        /// Unregisters a function with one argument from the global event table.
+        /// Unregisters a method with one argument from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
-        /// <param name="action">The function to remove.</param>
+        /// <param name="action">The method to remove.</param>
         public static void UnsubscribeEvent<T1>(string eventName, Action<T1> action) {
             UnsubscribeEvent(eventName, action as Delegate);
         }
 
         /// <summary>
-        /// Unregisters a function with two arguments from the global event table.
+        /// Unregisters a method with two arguments from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
-        /// <param name="action">The function to remove.</param>
+        /// <param name="action">The method to remove.</param>
         public static void UnsubscribeEvent<T1, T2>(string eventName, Action<T1, T2> action) {
             UnsubscribeEvent(eventName, action as Delegate);
         }
 
         /// <summary>
-        /// Unregisters a function with three arguments from the global event table.
+        /// Unregisters a method with three arguments from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
-        /// <param name="action">The function to remove.</param>
+        /// <param name="action">The method to remove.</param>
         public static void UnsubscribeEvent<T1, T2, T3>(string eventName, Action<T1, T2, T3> action) {
             UnsubscribeEvent(eventName, action as Delegate);
         }
 
         /// <summary>
-        /// Unregisters a function with four arguments from the global event table.
+        /// Unregisters a method with four arguments from the global event table.
         /// </summary>
         /// <param name="eventName">The identifier for the event to remove.</param>
-        /// <param name="action">The function to remove.</param>
+        /// <param name="action">The method to remove.</param>
         public static void UnsubscribeEvent<T1, T2, T3, T4>(string eventName, Action<T1, T2, T3, T4> action) {
             UnsubscribeEvent(eventName, action as Delegate);
         }

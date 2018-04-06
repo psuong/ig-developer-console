@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GlobalEvents {
 
@@ -7,87 +8,72 @@ namespace GlobalEvents {
 
     public static class RelativeEventHandler {
 
-        private static IDictionary<Object, IDictionary<string, Delegate>> relativeEventTable = new Dictionary<Object, IDictionary<string, Delegate>>();
+        private static IDictionary<string, object> relativeEventTable = new Dictionary<string, object>();
 
-        private static Delegate GetDelegate(string eventName, IDictionary<string, Delegate> eventTable) {
-            var d = default(Delegate);
-            eventTable.TryGetValue(eventName, out d);
-            return d;
+        private static object GetRelativeObject(string methodName) {
+            var instance = default(object);
+            relativeEventTable.TryGetValue(methodName, out instance);
+            return instance;
         }
 
-        private static void SubscribeEvent(IDictionary<string, Delegate> eventTable, string eventName, Delegate handler) {
-            var d = default(Delegate);
-            if (eventTable.TryGetValue(eventName, out d)) {
-                eventTable[eventName] = Delegate.Combine(d, handler);
-            } else {
-                eventTable.Add(eventName, handler);
+        private static void InvokeEvent(Type type, object instance, string methodName, object[] args, Type[] types) {
+            try {
+                MethodInfo methodInfo = type.GetMethod(methodName, 
+                        BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public, 
+                        Type.DefaultBinder, 
+                        types,
+                        null);
+                methodInfo.Invoke(instance, args);
+            } catch (Exception err) {
+#if UNITY_EDITOR
+                UnityEngine.Debug.LogError(err);
+#endif
             }
         }
-
-        private static void SubscribeEvent(Object obj, string eventName, Delegate handler) {
-            if (obj == null) {
+    
+        /// <summary>
+        /// Invokes a method associated with an object that is registered to the relativeEventTable. This uses Reflections and
+        /// is for .NET 3.5.
+        /// </summary>
+        /// <param name="methodName">The method to subscribe.</param>
+        /// <param name="args">The arugments used to invoke the method.</param>
+        public static void InvokeEvent(string methodName, object[] args, Type[] types) {
+            var instance = GetRelativeObject(methodName);
+            if (instance != null) {
+                var type = instance.GetType();
+                InvokeEvent(type, instance, methodName, args, types);
+            }
+        }
+        
+        /// <summary>
+        /// Registers a method via its definition and the associated object to the relativeEventTable.
+        /// </summary>
+        /// <param name="methodName">The exact declaration of the method (e.g. void foo(), a string "foo" must be registered.</param>
+        /// <param name="instance">The instance of the object to register.</param>
+        public static void SubscribeEvent(string methodName, object instance) {
+            if (instance == null) {
 #if UNITY_EDITOR
-                UnityEngine.Debug.LogError("Cannot subscribe an event to a null object!");
+                UnityEngine.Debug.LogError("Object instance to subscribe is null!");
 #endif
                 return;
             }
-            var eventTable = default(IDictionary<string, Delegate>);
-            if (relativeEventTable.TryGetValue(obj, out eventTable)) {
-                SubscribeEvent(eventTable, eventName, handler);
-            } else {
-                var entry = new Dictionary<string, Delegate>();
-                entry.Add(eventName, handler);
-                relativeEventTable.Add(obj, entry);
-            }
-        }
 
-        private static void UnsubscribeEvent(IDictionary<string, Delegate> eventTable, string eventName, Delegate handler) {
-            var d = default(Delegate);
-            if (eventTable.TryGetValue(eventName, out d)) {
-                eventTable[eventName] = Delegate.Remove(d, handler);
-            }
-        }
+            var keyValuePair = new KeyValuePair<string, object>(methodName, instance);
 
-        private static void UnsubscribeEvent(Object obj, string eventName, Delegate handler) {
-            var eventTable = default(IDictionary<string, Delegate>);
-            if (relativeEventTable.TryGetValue(obj, out eventTable)) {
-                UnsubscribeEvent(eventTable, eventName, handler);
+            if (relativeEventTable.Contains(keyValuePair)) {
+#if UNITY_EDITOR
+                UnityEngine.Debug.LogErrorFormat("The event: {0} for {1} already exists within the RelativeEventHandler!", methodName, instance);
+#endif
+                return;
             }
+            relativeEventTable.Add(methodName, instance);
         }
         
         /// <summary>
-        /// Invokes an event relative to the Object given an event identifier.
+        /// The method to unregister from the relativeEventTable.
         /// </summary>
-        /// <param name="obj">The object which is subscribe to a relative event.</param>
-        /// <param name="eventName">The event to invoke.</param>
-        public static void InvokeEvent(Object obj, string eventName) {
-            var relativeEvent = default(IDictionary<string, Delegate>);
-            if (relativeEventTable.TryGetValue(obj, out relativeEvent)) {
-                var action = GetDelegate(eventName, relativeEvent) as Action;
-                if (action != null) {
-                    action();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Registers a Unity Object and its associated event to the relative event table.
-        /// </summary>
-        /// <param name="obj">The object to subscribe.</param>
-        /// <param name="eventName">The event's identifier to subscribe.</param>
-        /// <param name="action">The function to register.</param>
-        public static void SubscribeEvent(Object obj, string eventName, Action action) {
-            SubscribeEvent(obj, eventName, action as Delegate);
-        }
-        
-        /// <summary>
-        /// Deregisters a Unity Object and its associated event from the relative event table.
-        /// </summary>
-        /// <param name="obj">the object to deregister.</param>
-        /// <param name="eventName">The identifier for the event.</param>
-        /// <param name="action">The function to remove.</param>
-        public static void UnsubscribeEvent(Object obj, string eventName, Action action) {
-            UnsubscribeEvent(obj, eventName, action as Delegate);
+        public static void UnsubscribeEvent(string methodName) {
+            relativeEventTable.Remove(methodName);
         }
     }
 }
