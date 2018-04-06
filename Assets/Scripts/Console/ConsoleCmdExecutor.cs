@@ -46,11 +46,11 @@ namespace DeveloperConsole {
         }
 
         private void InvokeGlobalEvent(string eventName) {
-            RelativeEventHandler.InvokeEvent(eventName);
+            GlobalEventHandler.InvokeEvent(eventName);
         }
 
         private void InvokeRelativeEvent(string eventName, object[] args) {
-            RelativeEventHandler.InvokeEvent(eventName, args);
+            RelativeEventHandler.InvokeEvent(eventName, args, argParser.GetParameterTypes(args));
         }
 
         /// <summary>

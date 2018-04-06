@@ -16,9 +16,13 @@ namespace GlobalEvents {
             return instance;
         }
 
-        private static void InvokeEvent(Type type, object instance, string methodName, params object[] args) {
+        private static void InvokeEvent(Type type, object instance, string methodName, object[] args, Type[] types) {
             try {
-                MethodInfo methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+                MethodInfo methodInfo = type.GetMethod(methodName, 
+                        BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public, 
+                        Type.DefaultBinder, 
+                        types,
+                        null);
                 methodInfo.Invoke(instance, args);
             } catch (Exception err) {
 #if UNITY_EDITOR
@@ -33,11 +37,11 @@ namespace GlobalEvents {
         /// </summary>
         /// <param name="methodName">The method to subscribe.</param>
         /// <param name="args">The arugments used to invoke the method.</param>
-        public static void InvokeEvent(string methodName, params object[] args) {
+        public static void InvokeEvent(string methodName, object[] args, Type[] types) {
             var instance = GetRelativeObject(methodName);
             if (instance != null) {
                 var type = instance.GetType();
-                InvokeEvent(type, instance, methodName, args);
+                InvokeEvent(type, instance, methodName, args, types);
             }
         }
         

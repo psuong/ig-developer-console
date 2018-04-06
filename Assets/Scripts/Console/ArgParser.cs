@@ -66,6 +66,7 @@ namespace DeveloperConsole {
         /// <summary>
         /// Parses all parameters into their value types.
         /// </summary>
+        /// <param="args">The string based arguments to interpret and get the value.</param>
         /// <returns>An array of objects with their value parsed counterparts.</returns>
         internal object[] ParseParameters(string[] args) {
             switch(args.Length) {
@@ -101,6 +102,35 @@ namespace DeveloperConsole {
                     };
                 default:
                     return new object[] {};
+            }
+        }
+
+        internal Type[] GetParameterTypes(object[] args) {
+            switch(args.Length) {
+                case 1:
+                    return new Type[] {
+                        args[0].GetType()
+                    };
+                case 2:
+                    return new Type[] {
+                        args[0].GetType(),
+                        args[1].GetType()
+                    };
+                case 3:
+                    return new Type[] {
+                        args[0].GetType(),
+                        args[1].GetType(),
+                        args[2].GetType()
+                    };
+                case 4:
+                    return new Type[] {
+                        args[0].GetType(),
+                        args[1].GetType(),
+                        args[2].GetType(),
+                        args[3].GetType()
+                    };
+                default:
+                    return new Type[] {};
             }
         }
     }
