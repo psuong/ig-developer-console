@@ -59,7 +59,7 @@ The `GlobalEventHandler` typically should be used for system wide events that af
 ```
 // GlobalEventHandler subscription
 using UnityEngine;
-using Toolkit.GlobalEvents;
+using GlobalEvents;
 
 public class Health : MonoBehaviour {
 
@@ -98,7 +98,7 @@ avoids using `Reflections` altogether. More details will come soon.
 ```
 // RelativeEventHander subscription
 using UnityEngine;
-using Toolkit.GlobalEvents;
+using GlobalEvents;
 
 public class Health : MonoBehaviour {
 
@@ -130,12 +130,12 @@ public class AnotherClass : MonoBehaviour {
 ```
 
 ### Logging Events to Console ###
-Logging a custom message to the console uses the `GlobalEventHandler` and it takes one line of code! 
+Logging a custom message to the console uses the `GlobalEventHandler` internally and it takes one line of code! 
 See the example below.
 
 ```
-using Toolkit.DeveloperConsole.Events;
-using Toolkit.GlobalEvents;
+using Console.Events;
+using GlobalEvents;
 using UnityEngine;
 
 public class ClearFieldUtility : MonoBehaviour {
@@ -151,13 +151,9 @@ public class ClearFieldUtility : MonoBehaviour {
     private void WipeAllEnemies() {
         // Implementation of clearing all enemies logic goes here
 
-        // Add the event name to invoke (ConsoleEventConstants.AddOutputEventName)
-        // Add your custom message
-        // Add the colour of the text
-        GlobalEventHandler.Invoke(
-            ConsoleEventConstants.AddOutputEventName,
-            "Your custom message goes here",
-            Color.green);
+        // To add an output message to the console, invoke ConsoleOuput.Log(string, colour)
+        // Since it's using Unity's UI text, rich text format is automatically supported
+        ConsoleOutput.Log("Your custom message goes here", Color.red);
     }
 }
 ```

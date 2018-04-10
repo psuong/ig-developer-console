@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Toolkit.GlobalEvents {
+namespace GlobalEvents {
 
     using Object = UnityEngine.Object;
 

@@ -1,4 +1,4 @@
-﻿namespace Toolkit.DeveloperConsole.Events {
+﻿namespace Console.Events {
     
     /// <summary>
     /// A static class to define constants which can be used anywhere within the project.
