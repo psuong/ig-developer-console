@@ -1,15 +1,14 @@
-﻿using Toolkit.DeveloperConsole;
-using Toolkit.GlobalEvents;
+﻿using GlobalEvents;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 
-namespace Toolkit.DeveloperConsole.UI {
+namespace Console {
 
-    using Toolkit.DeveloperConsole.Events;
+    using Console.Events;
 
-    public class ConsoleOutputUI : MonoBehaviour {
+    public class ConsoleOutput : MonoBehaviour {
 
         [Header("UI")]
         [SerializeField, Tooltip("Which transform should the outputTextTemplates instantiate under?")]
@@ -28,7 +27,7 @@ namespace Toolkit.DeveloperConsole.UI {
         /// </summary>
         /// <param name="text">The custom message to show on the console</param>
         /// <param name="textColor">The default color of the text</param>
-        public static void AddToConsoleOutput(string text, Color textColor) {
+        public static void Log(string text, Color textColor) {
             GlobalEventHandler.InvokeEvent(ConsoleEvents.OutputEvent, text, textColor);
         }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Toolkit.DeveloperConsole {
+namespace Console {
 
     public class ArgParser {
 
@@ -105,6 +105,11 @@ namespace Toolkit.DeveloperConsole {
             }
         }
 
+        /// <summary>
+        /// Stores the type of each argument in an array. This is only used for .NET 3.5 for reflections.
+        /// </summary>
+        /// <param name="args">The parsed arguments.</param>
+        /// <returns>An array of types respective to each argument.</returns>
         internal Type[] GetParameterTypes(object[] args) {
             switch(args.Length) {
                 case 1:

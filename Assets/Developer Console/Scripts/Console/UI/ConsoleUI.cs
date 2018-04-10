@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Toolkit.DeveloperConsole.UI {
+namespace Console.UI {
     
     public class ConsoleUI : MonoBehaviour {
 
