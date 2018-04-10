@@ -2,9 +2,9 @@
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace DeveloperConsole.UI {
+namespace Console.UI {
 
-    public class ConsoleInputUIManager : MonoBehaviour {
+    public class ConsoleInput : MonoBehaviour {
 
         [Header("Inputs")]
         [SerializeField, Tooltip("Which key stroke traverses through the history forward?")]

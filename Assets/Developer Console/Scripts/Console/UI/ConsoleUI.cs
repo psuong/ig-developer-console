@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DeveloperConsole.UI {
+namespace Console.UI {
     
     public class ConsoleUI : MonoBehaviour {
 
@@ -9,8 +9,8 @@ namespace DeveloperConsole.UI {
         private KeyCode showConsoleKey = KeyCode.BackQuote;
 
         [Header("UI")]
-        [SerializeField, Tooltip("Which Developr Console should be managed?")]
-        private GameObject developerConsole;
+        [SerializeField, Tooltip("Which Developer Console should be managed?")]
+        private GameObject console;
 
         private bool isConsoleShowing;
 
@@ -31,7 +31,7 @@ namespace DeveloperConsole.UI {
 
         private void SetConsoleState(bool isShowing) {
             isConsoleShowing = isShowing;
-            developerConsole.SetActive(isShowing);
+            console.SetActive(isShowing);
         }
     }
 }

@@ -130,11 +130,11 @@ public class AnotherClass : MonoBehaviour {
 ```
 
 ### Logging Events to Console ###
-Logging a custom message to the console uses the `GlobalEventHandler` and it takes one line of code! 
+Logging a custom message to the console uses the `GlobalEventHandler` internally and it takes one line of code! 
 See the example below.
 
 ```
-using DeveloperConsole.Utility;
+using Console.Events;
 using GlobalEvents;
 using UnityEngine;
 
@@ -151,13 +151,9 @@ public class ClearFieldUtility : MonoBehaviour {
     private void WipeAllEnemies() {
         // Implementation of clearing all enemies logic goes here
 
-        // Add the event name to invoke (ConsoleEventConstants.AddOutputEventName)
-        // Add your custom message
-        // Add the colour of the text
-        GlobalEventHandler.Invoke(
-            ConsoleEventConstants.AddOutputEventName,
-            "Your custom message goes here",
-            Color.green);
+        // To add an output message to the console, invoke ConsoleOuput.Log(string, colour)
+        // Since it's using Unity's UI text, rich text format is automatically supported
+        ConsoleOutput.Log("Your custom message goes here", Color.red);
     }
 }
 ```

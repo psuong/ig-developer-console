@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace DeveloperConsole {
+namespace Console {
 
     public class ArgParser {
 
@@ -20,11 +20,11 @@ namespace DeveloperConsole {
         }
 
         public ArgParser(string eventPattern, string charPattern, string intPattern, string floatPattern, string stringPattern) {
-            eventNameRegex  = new Regex(@eventPattern);
-            charRegex       = new Regex(@charPattern);
-            intRegex        = new Regex(@intPattern);
-            floatRegex      = new Regex(@floatPattern);
-            stringRegex     = new Regex(@stringPattern);
+            eventNameRegex  = new Regex(eventPattern);
+            charRegex       = new Regex(charPattern);
+            intRegex        = new Regex(intPattern);
+            floatRegex      = new Regex(floatPattern);
+            stringRegex     = new Regex(stringPattern);
         }
 
         private object GetParameterValue(string arg) {
@@ -105,6 +105,11 @@ namespace DeveloperConsole {
             }
         }
 
+        /// <summary>
+        /// Stores the type of each argument in an array. This is only used for .NET 3.5 for reflections.
+        /// </summary>
+        /// <param name="args">The parsed arguments.</param>
+        /// <returns>An array of types respective to each argument.</returns>
         internal Type[] GetParameterTypes(object[] args) {
             switch(args.Length) {
                 case 1:
