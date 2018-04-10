@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace DeveloperConsole {
+namespace Toolkit.DeveloperConsole {
 
-    using GlobalEvents;
+    using Toolkit.GlobalEvents;
 
     public class ConsoleCmdExecutor : MonoBehaviour {
         

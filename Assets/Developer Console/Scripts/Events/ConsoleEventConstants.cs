@@ -1,14 +1,13 @@
-﻿namespace DeveloperConsole.Utility {
+﻿namespace Toolkit.DeveloperConsole.Events {
     
     /// <summary>
     /// A static class to define constants which can be used anywhere within the project.
     /// </summary>
-    public static class ConsoleEventConstants {
+    public static class ConsoleEvents {
         
         /// <summary>
-        /// A readonly constant global event name for adding an output to the DeveloperConsole.
+        /// A readonly constant global event name for adding an output to the Console.
         /// </summary>
-        public readonly static string AddOutputEventName = "Add Output";
-
+        public readonly static string OutputEvent = "Add Output";
     }
 }
