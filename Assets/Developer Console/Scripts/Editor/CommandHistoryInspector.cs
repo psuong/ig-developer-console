@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 
-namespace DeveloperConsole {
+namespace Toolkit.DeveloperConsole {
 
     /// <summary>
     /// This is used to see the ConsolesHistory within the inspector of the

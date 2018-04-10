@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace DeveloperConsole {
+namespace Toolkit.DeveloperConsole {
 
     public class ArgParser {
 
@@ -20,11 +20,11 @@ namespace DeveloperConsole {
         }
 
         public ArgParser(string eventPattern, string charPattern, string intPattern, string floatPattern, string stringPattern) {
-            eventNameRegex  = new Regex(@eventPattern);
-            charRegex       = new Regex(@charPattern);
-            intRegex        = new Regex(@intPattern);
-            floatRegex      = new Regex(@floatPattern);
-            stringRegex     = new Regex(@stringPattern);
+            eventNameRegex  = new Regex(eventPattern);
+            charRegex       = new Regex(charPattern);
+            intRegex        = new Regex(intPattern);
+            floatRegex      = new Regex(floatPattern);
+            stringRegex     = new Regex(stringPattern);
         }
 
         private object GetParameterValue(string arg) {

@@ -59,7 +59,7 @@ The `GlobalEventHandler` typically should be used for system wide events that af
 ```
 // GlobalEventHandler subscription
 using UnityEngine;
-using GlobalEvents;
+using Toolkit.GlobalEvents;
 
 public class Health : MonoBehaviour {
 
@@ -98,7 +98,7 @@ avoids using `Reflections` altogether. More details will come soon.
 ```
 // RelativeEventHander subscription
 using UnityEngine;
-using GlobalEvents;
+using Toolkit.GlobalEvents;
 
 public class Health : MonoBehaviour {
 
@@ -134,8 +134,8 @@ Logging a custom message to the console uses the `GlobalEventHandler` and it tak
 See the example below.
 
 ```
-using DeveloperConsole.Utility;
-using GlobalEvents;
+using Toolkit.DeveloperConsole.Events;
+using Toolkit.GlobalEvents;
 using UnityEngine;
 
 public class ClearFieldUtility : MonoBehaviour {

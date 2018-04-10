@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GlobalEvents {
+namespace Toolkit.GlobalEvents {
 
     /// <summary>
     /// Stores global events to be freely accessed on a global level.

@@ -1,15 +1,15 @@
-﻿using DeveloperConsole;
-using GlobalEvents;
+﻿using Toolkit.DeveloperConsole;
+using Toolkit.GlobalEvents;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 
-namespace DeveloperConsole.UI {
+namespace Toolkit.DeveloperConsole.UI {
 
-    using DeveloperConsole.Utility;
+    using Toolkit.DeveloperConsole.Events;
 
-    public class ConsoleOutputUIManager : MonoBehaviour {
+    public class ConsoleOutputUI : MonoBehaviour {
 
         [Header("UI")]
         [SerializeField, Tooltip("Which transform should the outputTextTemplates instantiate under?")]
@@ -21,20 +21,29 @@ namespace DeveloperConsole.UI {
         [SerializeField, Tooltip("How many outputs can be logged to the console?")]
         private int historySize = 20;
 
-        private IList<Tuple<string, Color, Text>> consoleOutputs;
+        private IList<Text> consoleOutputs;
+
+        /// <summary>
+        /// Adds a custom message to the scrollable console view. This supports RTF (rich text format).
+        /// </summary>
+        /// <param name="text">The custom message to show on the console</param>
+        /// <param name="textColor">The default color of the text</param>
+        public static void AddToConsoleOutput(string text, Color textColor) {
+            GlobalEventHandler.InvokeEvent(ConsoleEvents.OutputEvent, text, textColor);
+        }
 
         private void OnEnable() {
             // Subscribe the AddConsoleOutput to the Event Handler
-            GlobalEventHandler.SubscribeEvent<string, Color>(ConsoleEventConstants.AddOutputEventName, AddConsoleOutput);
+            GlobalEventHandler.SubscribeEvent<string, Color>(ConsoleEvents.OutputEvent, AddConsoleOutput);
         }
 
         private void OnDisable() {
             // Unsubscribe the AddConsoleOutput from the Event Handler
-            GlobalEventHandler.UnsubscribeEvent<string, Color>(ConsoleEventConstants.AddOutputEventName, AddConsoleOutput);
+            GlobalEventHandler.UnsubscribeEvent<string, Color>(ConsoleEvents.OutputEvent, AddConsoleOutput);
         }
 
         private void Start() {
-            consoleOutputs = new List<Tuple<string, Color, Text>>();
+            consoleOutputs = new List<Text>();
 
             Assert.IsNotNull(outputTextTemplate, "No output text template cached!");
             Assert.IsNotNull(textOutputParent, "No parent transform cached!");
@@ -42,7 +51,7 @@ namespace DeveloperConsole.UI {
 
         private void AddConsoleOutput(string message, Color color) {
             Text text = CreateOutputMessage(message, color);
-            consoleOutputs.Add(Tuple<string, Color, Text>.Create(message, color, text));
+            consoleOutputs.Add(text);
             if (consoleOutputs.Count > historySize) {
                 consoleOutputs.RemoveAt(0);
             }
@@ -54,6 +63,5 @@ namespace DeveloperConsole.UI {
             output.text = string.Format("#{0}. {1}", consoleOutputs.Count + 1, message);
             return output;
         }
-
     }
 }

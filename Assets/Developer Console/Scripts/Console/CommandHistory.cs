@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DeveloperConsole {
+namespace Toolkit.DeveloperConsole {
 
     [CreateAssetMenu(fileName = "CommandHistory", menuName = "Developer Console/Command History")]
     public class CommandHistory : ScriptableObject {
