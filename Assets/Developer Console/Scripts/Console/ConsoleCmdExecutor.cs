@@ -50,7 +50,8 @@ namespace Console {
         }
 
         private void InvokeRelativeEvent(string eventName, object[] args) {
-            RelativeEventHandler.InvokeEvent(eventName, args, argParser.GetParameterTypes(args));
+            throw new System.NotImplementedException();
+            // RelativeEventHandler.InvokeEvent(eventName, args, argParser.GetParameterTypes(args));
         }
 
         /// <summary>

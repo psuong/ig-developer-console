@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Reflection;
+using System.Collections.Generic;
 
 namespace GlobalEvents {
 
-    using Object = UnityEngine.Object;
+    using Type = System.Type;
 
     public static class RelativeEventHandler {
 
@@ -38,7 +39,15 @@ namespace GlobalEvents {
             return eventTable;
         }
 
-        private static void SubscribeEvent(string eventName, object instance, string method) {
+        private static void InvokeEvent(Type type, object instance, string methodName, object[] args, Type[] typeArgs) {
+            throw new System.NotImplementedException();
+        }
+
+        public static void InvokeEvent(string eventName, object instance, string method, object[] args, Type[] types) {
+            throw new System.NotImplementedException();
+        }
+
+        public static void SubscribeEvent(string eventName, object instance, string method) {
             var eventTable = default(IDictionary<object, IList<string>>);
             if (relativeEventTable.TryGetValue(eventName, out eventTable)) {
                 AddRelativeEvent(instance, method, ref eventTable);
@@ -46,6 +55,16 @@ namespace GlobalEvents {
                 IDictionary<object, IList<string>> relativeEvent = new Dictionary<object, IList<string>>();
                 AddRelativeEvent(instance, method, ref relativeEvent);
                 relativeEventTable.Add(eventName, relativeEvent);
+            }
+        }
+
+        public static void UnsubscribeEvent(string eventName, object instance, string method) {
+            var eventTable = default(IDictionary<object, IList<string>>);
+            if (relativeEventTable.TryGetValue(eventName, out eventTable)) {
+                var subscribedMethods = default(IList<string>);
+                if (eventTable.TryGetValue(instance, out subscribedMethods)) {
+                    subscribedMethods.Remove(method);
+                }
             }
         }
     }
