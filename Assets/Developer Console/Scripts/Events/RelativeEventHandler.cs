@@ -30,6 +30,7 @@ namespace GlobalEvents {
                 var methods = new List<string>();
                 methods.Add(method);
                 relativeEvent.Add(key, methods);
+                UnityEngine.Debug.LogFormat("{0}, {1}", key, method);
             }
         }
 
@@ -39,26 +40,36 @@ namespace GlobalEvents {
             return eventTable;
         }
 
-        private static void InvokeEvent(Type type, object instance, string methodName, object[] args, Type[] typeArgs) {
-            try {
-                var methodinfo = type.GetMethod(
-                        methodName,
-                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
-                        Type.DefaultBinder,
-                        typeArgs,
-                        null);
-
-                methodinfo.Invoke(instance, args);
-            } catch (System.Exception err) {
+        private static void InvokeEvent(Type type, object instance, IList<string> methods, object[] args, Type[] typeArgs) {
+            foreach(var method in methods) {
+                try {
+                    UnityEngine.Debug.Log(method);
+                    var methodInfo = type.GetMethod(
+                            method,
+                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod,
+                            null,
+                            typeArgs,
+                            null);
+                    UnityEngine.Debug.Log(methodInfo == null);
+                    methodInfo.Invoke(instance, args);
+                } catch (System.Exception err) {
 #if UNITY_EDITOR
-                UnityEngine.Debug.LogError(err);
+                    UnityEngine.Debug.LogError(err);
 #endif
+                }
             }
         }
 
-        public static void InvokeEvent(string eventName, object instance, string method, object[] args, Type[] typeArgs) {
-            var instanceType = instance.GetType();
-            InvokeEvent(instanceType, instance, method, args, typeArgs);
+        public static void InvokeEvent(string eventName, object instance, object[] args, Type[] typeArgs) {
+            var eventTable = default(IDictionary<object, IList<string>>);
+            if (relativeEventTable.TryGetValue(eventName, out eventTable)) {
+                var subscribedMethods = default(IList<string>);
+
+                if (eventTable.TryGetValue(instance, out subscribedMethods)) {
+                    var instanceType = instance.GetType();
+                    InvokeEvent(instanceType, instance, subscribedMethods, args, typeArgs);
+                }
+            }
         }
 
         public static void SubscribeEvent(string eventName, object instance, string method) {
