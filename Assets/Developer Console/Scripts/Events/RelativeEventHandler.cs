@@ -40,11 +40,25 @@ namespace GlobalEvents {
         }
 
         private static void InvokeEvent(Type type, object instance, string methodName, object[] args, Type[] typeArgs) {
-            throw new System.NotImplementedException();
+            try {
+                var methodinfo = type.GetMethod(
+                        methodName,
+                        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                        Type.DefaultBinder,
+                        typeArgs,
+                        null);
+
+                methodinfo.Invoke(instance, args);
+            } catch (System.Exception err) {
+#if UNITY_EDITOR
+                UnityEngine.Debug.LogError(err);
+#endif
+            }
         }
 
-        public static void InvokeEvent(string eventName, object instance, string method, object[] args, Type[] types) {
-            throw new System.NotImplementedException();
+        public static void InvokeEvent(string eventName, object instance, string method, object[] args, Type[] typeArgs) {
+            var instanceType = instance.GetType();
+            InvokeEvent(instanceType, instance, method, args, typeArgs);
         }
 
         public static void SubscribeEvent(string eventName, object instance, string method) {
