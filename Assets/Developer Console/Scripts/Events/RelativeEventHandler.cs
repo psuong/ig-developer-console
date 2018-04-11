@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Collections.Generic;
 
 namespace GlobalEvents {
 
@@ -8,72 +6,47 @@ namespace GlobalEvents {
 
     public static class RelativeEventHandler {
 
-        private static IDictionary<string, object> relativeEventTable = new Dictionary<string, object>();
+        private static IDictionary<string, IDictionary<object, IList<string>>> relativeEventTable = new Dictionary<string, IDictionary<object, IList<string>>>();
 
-        private static object GetRelativeObject(string methodName) {
-            var instance = default(object);
-            relativeEventTable.TryGetValue(methodName, out instance);
-            return instance;
-        }
-
-        private static void InvokeEvent(Type type, object instance, string methodName, object[] args, Type[] types) {
-            try {
-                MethodInfo methodInfo = type.GetMethod(methodName, 
-                        BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public, 
-                        Type.DefaultBinder, 
-                        types,
-                        null);
-                methodInfo.Invoke(instance, args);
-            } catch (Exception err) {
+        private static bool TryAddMethod(string method, ref IList<string> subscribedMethods) {
+            if (!subscribedMethods.Contains(method)) {
+                subscribedMethods.Add(method);
+                return true;
+            } else {
 #if UNITY_EDITOR
-                UnityEngine.Debug.LogError(err);
+                UnityEngine.Debug.LogWarningFormat("{0} has already been subscribed to the relative event table.", method);
 #endif
+                return false;
             }
         }
-    
-        /// <summary>
-        /// Invokes a method associated with an object that is registered to the relativeEventTable. This uses Reflections and
-        /// is for .NET 3.5.
-        /// </summary>
-        /// <param name="methodName">The method to subscribe.</param>
-        /// <param name="args">The arugments used to invoke the method.</param>
-        public static void InvokeEvent(string methodName, object[] args, Type[] types) {
-            var instance = GetRelativeObject(methodName);
-            if (instance != null) {
-                var type = instance.GetType();
-                InvokeEvent(type, instance, methodName, args, types);
-            }
-        }
-        
-        /// <summary>
-        /// Registers a method via its definition and the associated object to the relativeEventTable.
-        /// </summary>
-        /// <param name="methodName">The exact declaration of the method (e.g. void foo(), a string "foo" must be registered.</param>
-        /// <param name="instance">The instance of the object to register.</param>
-        public static void SubscribeEvent(string methodName, object instance) {
-            if (instance == null) {
-#if UNITY_EDITOR
-                UnityEngine.Debug.LogError("Object instance to subscribe is null!");
-#endif
-                return;
-            }
 
-            var keyValuePair = new KeyValuePair<string, object>(methodName, instance);
-
-            if (relativeEventTable.Contains(keyValuePair)) {
-#if UNITY_EDITOR
-                UnityEngine.Debug.LogErrorFormat("The event: {0} for {1} already exists within the RelativeEventHandler!", methodName, instance);
-#endif
-                return;
+        private static void AddRelativeEvent(object key, string method, ref IDictionary<object, IList<string>> relativeEvent) {
+            var subscribedMethods = default(IList<string>);
+            if (relativeEvent.TryGetValue(key, out subscribedMethods)) {
+                TryAddMethod(method, ref subscribedMethods);
+                relativeEvent[key] = subscribedMethods;
+            } else {
+                var methods = new List<string>();
+                methods.Add(method);
+                relativeEvent.Add(key, methods);
             }
-            relativeEventTable.Add(methodName, instance);
         }
-        
-        /// <summary>
-        /// The method to unregister from the relativeEventTable.
-        /// </summary>
-        public static void UnsubscribeEvent(string methodName) {
-            relativeEventTable.Remove(methodName);
+
+        private static IDictionary<object, IList<string>> GetRelativeEventTable(string eventName) {
+            var eventTable = default(IDictionary<object, IList<string>>);
+            relativeEventTable.TryGetValue(eventName, out eventTable);
+            return eventTable;
+        }
+
+        private static void SubscribeEvent(string eventName, object instance, string method) {
+            var eventTable = default(IDictionary<object, IList<string>>);
+            if (relativeEventTable.TryGetValue(eventName, out eventTable)) {
+                AddRelativeEvent(instance, method, ref eventTable);
+            } else {
+                IDictionary<object, IList<string>> relativeEvent = new Dictionary<object, IList<string>>();
+                AddRelativeEvent(instance, method, ref relativeEvent);
+                relativeEventTable.Add(eventName, relativeEvent);
+            }
         }
     }
 }
