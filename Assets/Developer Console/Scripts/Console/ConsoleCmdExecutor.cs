@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Console {
 
     using GlobalEvents;
 
     public class ConsoleCmdExecutor : MonoBehaviour {
-        
+
         [SerializeField, Tooltip("What is the separator of the command line input? By default it is a space character.")]
         private char delimiter = ' ';
 
