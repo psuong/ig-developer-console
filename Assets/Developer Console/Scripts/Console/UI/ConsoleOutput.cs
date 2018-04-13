@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 
-namespace Console {
+namespace Console.UI {
 
     using Console.Events;
 

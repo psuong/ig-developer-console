@@ -48,9 +48,10 @@ namespace Console {
         private void InvokeGlobalEvent(string eventName) {
             GlobalEventHandler.InvokeEvent(eventName);
         }
-
+        
+        // TODO: IMPLEMENT THE RELATIVE EVENT HANDLER INVOCATION
         private void InvokeRelativeEvent(string eventName, object[] args) {
-            RelativeEventHandler.InvokeEvent(eventName, args, argParser.GetParameterTypes(args));
+            throw new System.NotImplementedException();
         }
 
         /// <summary>

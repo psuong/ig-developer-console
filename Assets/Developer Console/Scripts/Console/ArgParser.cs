@@ -110,7 +110,7 @@ namespace Console {
         /// </summary>
         /// <param name="args">The parsed arguments.</param>
         /// <returns>An array of types respective to each argument.</returns>
-        internal Type[] GetParameterTypes(object[] args) {
+        internal static Type[] GetParameterTypes(object[] args) {
             switch(args.Length) {
                 case 1:
                     return new Type[] {

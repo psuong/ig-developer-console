@@ -105,26 +105,36 @@ public class Health : MonoBehaviour {
     private void Heal(float amount) {
         // Heal implementation goes here
     }
+
+    private void Heal(float amount, string message) {
+        Heal(amount);
+        Debug.Log(message);
+    }
     
     private void OnEnable() {
-        // Subscribe the event with the name of the method and the instance
-        // of object
-        RelativeEventHandler.SubscribeEvent("Heal", this);
+        // Subscribe the event, the instance of the object, and the method "Heal"
+        // We can subscribe multiple methods to the event "Repair"
+        RelativeEventHandler.SubscribeEvent("Repair", this, "Heal");
     }
     
     private void OnDisable() {
-        // Unsubscribe the event if you want to remove it
-        // You only need the name of the method to unsubscribe from the
-        // RelativeEventHandler
-        RelativeEventHandler.UnsubscribeEvent("Heal");
+        // Unsubscribe the method "Heal" from the event "Repair"
+        // Keep in mind that overloaded functions will also be removed
+        RelativeEventHandler.UnsubscribeEvent("Repair", this, "Heal");
     }
 }
 
 public class AnotherClass : MonoBehaviour {
     
+    // Store the reference of the instance of Health
+    public Health health;
+    
     private void Start() {
-        // Invoke the Heal event on start with a value of 50
-        RelativeEventHandler("Heal", 100f);
+        // Invoke the Heal event on start with a value of 100
+        RelativeEventHandler.InvokeEvent("Repair", health, new object[] { 50f });
+
+        // To invoke the other overlaoded function
+        RelativeEventHandler.InvokeEvent("Repair", health, new object[] { 50f, "Healed!" });
     }
 }
 ```
