@@ -30,7 +30,6 @@ namespace GlobalEvents {
                 var methods = new List<string>();
                 methods.Add(method);
                 relativeEvent.Add(key, methods);
-                UnityEngine.Debug.LogFormat("{0}, {1}", key, method);
             }
         }
 
@@ -46,8 +45,8 @@ namespace GlobalEvents {
                     UnityEngine.Debug.Log(method);
                     var methodInfo = type.GetMethod(
                             method,
-                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod,
-                            null,
+                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
+                            Type.DefaultBinder,
                             typeArgs,
                             null);
                     UnityEngine.Debug.Log(methodInfo == null);
@@ -60,7 +59,7 @@ namespace GlobalEvents {
             }
         }
 
-        public static void InvokeEvent(string eventName, object instance, object[] args, Type[] typeArgs) {
+        private static void InvokeEvent(string eventName, object instance, object[] args, Type[] typeArgs) {
             var eventTable = default(IDictionary<object, IList<string>>);
             if (relativeEventTable.TryGetValue(eventName, out eventTable)) {
                 var subscribedMethods = default(IList<string>);
@@ -70,6 +69,11 @@ namespace GlobalEvents {
                     InvokeEvent(instanceType, instance, subscribedMethods, args, typeArgs);
                 }
             }
+        }
+
+        public static void InvokeEvent(string eventName, object instance, object[] args) {
+            var types = Console.ArgParser.GetParameterTypes(args);
+            InvokeEvent(eventName, instance, args, types);
         }
 
         public static void SubscribeEvent(string eventName, object instance, string method) {
