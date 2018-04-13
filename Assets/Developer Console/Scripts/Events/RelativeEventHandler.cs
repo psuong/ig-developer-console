@@ -6,7 +6,7 @@ namespace GlobalEvents {
     using Type = System.Type;
 
     public static class RelativeEventHandler {
-
+        
         private static IDictionary<string, IDictionary<object, IList<string>>> relativeEventTable = new Dictionary<string, IDictionary<object, IList<string>>>();
 
         private static bool TryAddMethod(string method, ref IList<string> subscribedMethods) {
