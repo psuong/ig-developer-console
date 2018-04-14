@@ -29,7 +29,7 @@ namespace Console {
 
         private object GetParameterValue(string arg) {
             if (IsArgInt(arg)) {
-                return int.Parse(arg);
+                return TryParseInt(arg);
             } else if (IsArgFloat(arg)) {
                 return float.Parse(arg);
             } else if (IsArgChar(arg)) {
@@ -61,6 +61,30 @@ namespace Console {
         /// <returns>True, if there is no space within the eventName".</returns>
         internal bool IsEventNameValid(string eventName) {
             return !eventNameRegex.IsMatch(eventName);
+        }
+        
+        /// <summary>
+        /// Attempts to parse a string to an integer if able, otherwise the default
+        /// value of the float is returned.
+        /// </summary>
+        /// <param name="arg">The string to parse.</param>
+        /// <returns>The integer value of arg.</returns>
+        internal int TryParseInt(string arg) {
+            int value;
+            int.TryParse(arg, out value);
+            return value;
+        }
+        
+        /// <summary>
+        /// Attempts to parse a string to a float if able, otherwise the default
+        /// value of the float is returned.
+        /// </summary>
+        /// <param name="arg">The string to parse.</param>
+        /// <returns>The float value of the arg.</param>
+        internal float TryParseFloat(string arg) {
+            float value;
+            float.TryParse(arg, out value);
+            return value;
         }
         
         /// <summary>
