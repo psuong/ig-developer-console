@@ -139,6 +139,36 @@ public class AnotherClass : MonoBehaviour {
 }
 ```
 
+### Executing Relative Events from the Console ###
+Since the console doesn't have a concept of components and `gameObjects`, they are referenced via their instance ID. 
+Therefore, each instance Id and gameObject pair must be cached upon instantiation and removed upon destruction.
+
+```
+using UnityEngine;
+using GlobalEvents;
+
+public class Health : MonoBehaviour {
+
+    private void OnEnable() {
+        // Subscribe the event, the instance of the object, and the method "Heal"
+        // We can subscribe multiple methods to the event "Repair"
+        RelativeEventHandler.SubscribeEvent("Repair", this, "Heal");
+
+        // Cache the instance of the object and the instance id.
+        IdCache.CacheInstanceId(id, this);
+    }
+
+    private void OnDisable() {
+        // Unsubscribe the method "Heal" from the event "Repair"
+        // Keep in mind that overloaded functions will also be removed
+        RelativeEventHandler.UnsubscribeEvent("Repair", this, "Heal");
+        
+        // Remove the instance id when the gameObject is disabled/destroyed 
+        IdCache.RemoveInstanceId(GetInstanceId());
+    }
+}
+```
+
 ### Logging Events to Console ###
 Logging a custom message to the console uses the `GlobalEventHandler` internally and it takes one line of code! 
 See the example below.

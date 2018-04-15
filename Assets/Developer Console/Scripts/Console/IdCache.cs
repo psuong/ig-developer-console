@@ -11,11 +11,13 @@ namespace Console {
         private void OnEnable() {
             cache = new Dictionary<int, object>();
             GlobalEventHandler.SubscribeEvent<int, object>(Events.ConsoleEvents.CacheEvent, CacheId);
+            GlobalEventHandler.SubscribeEvent<int>(Events.ConsoleEvents.RemoveEvent, RemoveId);
         }
 
         private void OnDisable() {
             cache.Clear();
             GlobalEventHandler.UnsubscribeEvent<int, object>(Events.ConsoleEvents.CacheEvent, CacheId);
+            GlobalEventHandler.UnsubscribeEvent<int>(Events.ConsoleEvents.CacheEvent, RemoveId);
         }
         
         private void CacheId(int id, object instance) {
@@ -26,6 +28,10 @@ namespace Console {
             }
         }
 
+        private void RemoveId(int id) {
+            cache.Remove(id);
+        }
+
         /// <summary>
         /// Invokes a global event which store the instance Id of an object and the associated object.
         /// This invokes all instances of the scriptable object of type IdCache.
@@ -34,6 +40,15 @@ namespace Console {
         /// <param name="instance">The object associated with the id.</param>
         public static void CacheInstanceId(int id, object instance) {
             GlobalEventHandler.InvokeEvent<int, object>(Events.ConsoleEvents.CacheEvent, id, instance);
+        }
+        
+        /// <summary>
+        /// Invokes a global event which removes the instance Id fo an object and its associated object.
+        /// This invokes all instances of the scriptable object of type IdCache.
+        /// </summary>
+        /// <param name="id">The Id to remove.</param>
+        public static void RemoveInstanceId(int id) {
+            GlobalEventHandler.InvokeEvent<int>(Events.ConsoleEvents.RemoveEvent, id);
         }
         
         /// <summary>

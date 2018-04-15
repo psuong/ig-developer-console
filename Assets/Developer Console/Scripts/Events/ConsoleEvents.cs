@@ -9,6 +9,15 @@
         /// A readonly constant global event name for adding an output to the Console.
         /// </summary>
         public readonly static string OutputEvent = "Add Output";
-        public readonly static string CacheEvent = "Cache";
+
+        /// <summary>
+        /// A readonly constant global event name for caching the Instance Id.
+        /// </summary>
+        public readonly static string CacheEvent = "Cache Id";
+
+        /// <summary>
+        /// A readonly constant global event for removing the Instance Id.
+        /// </summary>
+        public readonly static string RemoveEvent = "Remove Id";
     }
 }
