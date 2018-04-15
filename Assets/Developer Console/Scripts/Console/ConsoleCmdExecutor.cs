@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Console {
 
     using GlobalEvents;
 
     public class ConsoleCmdExecutor : MonoBehaviour {
-        
+
         [SerializeField, Tooltip("What is the separator of the command line input? By default it is a space character.")]
         private char delimiter = ' ';
 
         [SerializeField, Tooltip("Should the regex be user defined?")]
         private bool useCustomRegexPatterns;
+        
+        [SerializeField, Tooltip("Which scriptable object stores the instance id, object pair?")]
+        private IdCache cache;
 
         [SerializeField]
         private string[] customRegexPatterns = new string[] {
@@ -32,6 +36,7 @@ namespace Console {
                     customRegexPatterns[3],
                     customRegexPatterns[4]
                 ) : new ArgParser();
+            Assert.IsNotNull(cache, "No IdCache was found!");
         }
 
         private string[] CopyArgs(string[] args, int startIndex) {
@@ -49,9 +54,8 @@ namespace Console {
             GlobalEventHandler.InvokeEvent(eventName);
         }
         
-        // TODO: IMPLEMENT THE RELATIVE EVENT HANDLER INVOCATION
-        private void InvokeRelativeEvent(string eventName, object[] args) {
-            throw new System.NotImplementedException();
+        private void InvokeRelativeEvent(string eventName, int instanceId, object[] args) {
+            RelativeEventHandler.InvokeEvent(eventName, cache[instanceId], args);
         }
 
         /// <summary>
@@ -64,8 +68,8 @@ namespace Console {
             var args = input.Trim().Split(delimiter);
             
             if (args.Length > 1) {
-                var parameters = argParser.ParseParameters(CopyArgs(args, 1));
-                InvokeRelativeEvent(args[0], parameters);
+                var parameters = argParser.ParseParameters(CopyArgs(args, 2));
+                InvokeRelativeEvent(args[0], argParser.TryParseInt(args[1]), parameters);
             } else {
                 InvokeGlobalEvent(args[0]);
             }
