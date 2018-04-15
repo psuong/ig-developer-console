@@ -104,8 +104,11 @@ namespace GlobalEvents {
         }
         
         /// <summary>
-        /// Removes an object instance and the name
+        /// Removes an object instance and the name of the method registered to that instance.
         /// </summary>
+        /// <param name="eventName">The name of the event to deregister.</param>
+        /// <param name="instance">The instance of the object to deregister.</param>
+        /// <param name="method">The string representation of the method to subscribe.</param>
         public static void UnsubscribeEvent(string eventName, object instance, string method) {
             var eventTable = default(IDictionary<object, IList<string>>);
             if (relativeEventTable.TryGetValue(eventName, out eventTable)) {
