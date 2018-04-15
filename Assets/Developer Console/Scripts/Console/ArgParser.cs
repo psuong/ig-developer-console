@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace DeveloperConsole {
+namespace Console {
 
     public class ArgParser {
 
@@ -20,16 +20,16 @@ namespace DeveloperConsole {
         }
 
         public ArgParser(string eventPattern, string charPattern, string intPattern, string floatPattern, string stringPattern) {
-            eventNameRegex  = new Regex(@eventPattern);
-            charRegex       = new Regex(@charPattern);
-            intRegex        = new Regex(@intPattern);
-            floatRegex      = new Regex(@floatPattern);
-            stringRegex     = new Regex(@stringPattern);
+            eventNameRegex  = new Regex(eventPattern);
+            charRegex       = new Regex(charPattern);
+            intRegex        = new Regex(intPattern);
+            floatRegex      = new Regex(floatPattern);
+            stringRegex     = new Regex(stringPattern);
         }
 
         private object GetParameterValue(string arg) {
             if (IsArgInt(arg)) {
-                return int.Parse(arg);
+                return TryParseInt(arg);
             } else if (IsArgFloat(arg)) {
                 return float.Parse(arg);
             } else if (IsArgChar(arg)) {
@@ -61,6 +61,30 @@ namespace DeveloperConsole {
         /// <returns>True, if there is no space within the eventName".</returns>
         internal bool IsEventNameValid(string eventName) {
             return !eventNameRegex.IsMatch(eventName);
+        }
+        
+        /// <summary>
+        /// Attempts to parse a string to an integer if able, otherwise the default
+        /// value of the float is returned.
+        /// </summary>
+        /// <param name="arg">The string to parse.</param>
+        /// <returns>The integer value of arg.</returns>
+        internal int TryParseInt(string arg) {
+            int value;
+            int.TryParse(arg, out value);
+            return value;
+        }
+        
+        /// <summary>
+        /// Attempts to parse a string to a float if able, otherwise the default
+        /// value of the float is returned.
+        /// </summary>
+        /// <param name="arg">The string to parse.</param>
+        /// <returns>The float value of the arg.</param>
+        internal float TryParseFloat(string arg) {
+            float value;
+            float.TryParse(arg, out value);
+            return value;
         }
         
         /// <summary>
@@ -105,7 +129,12 @@ namespace DeveloperConsole {
             }
         }
 
-        internal Type[] GetParameterTypes(object[] args) {
+        /// <summary>
+        /// Stores the type of each argument in an array. This is only used for .NET 3.5 for reflections.
+        /// </summary>
+        /// <param name="args">The parsed arguments.</param>
+        /// <returns>An array of types respective to each argument.</returns>
+        internal static Type[] GetParameterTypes(object[] args) {
             switch(args.Length) {
                 case 1:
                     return new Type[] {
