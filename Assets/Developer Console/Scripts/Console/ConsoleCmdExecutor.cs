@@ -10,13 +10,13 @@ namespace Console {
         [SerializeField, Tooltip("What is the separator of the command line input? By default it is a space character.")]
         private char delimiter = ' ';
 
-        [SerializeField, Tooltip("Should the regex be user defined?")]
-        private bool useCustomRegexPatterns;
-        
         [SerializeField, Tooltip("Which scriptable object stores the instance id, object pair?")]
         private IdCache cache;
 
-        [SerializeField]
+        [SerializeField, Tooltip("Should the regex be user defined?")]
+        private bool useCustomRegexPatterns;
+
+        [SerializeField, HideInInspector]
         private string[] customRegexPatterns = new string[] {
             @"s",
             @"^{1}$",
