@@ -10,13 +10,13 @@ namespace Console {
         [SerializeField, Tooltip("What is the separator of the command line input? By default it is a space character.")]
         private char delimiter = ' ';
 
-        [SerializeField, Tooltip("Should the regex be user defined?")]
-        private bool useCustomRegexPatterns;
-        
         [SerializeField, Tooltip("Which scriptable object stores the instance id, object pair?")]
         private IdCache cache;
 
-        [SerializeField]
+        [SerializeField, Tooltip("Should the regex be user defined?")]
+        private bool useCustomRegexPatterns;
+
+        [SerializeField, HideInInspector]
         private string[] customRegexPatterns = new string[] {
             @"s",
             @"^{1}$",
@@ -69,7 +69,14 @@ namespace Console {
             
             if (args.Length > 1) {
                 var parameters = argParser.ParseParameters(CopyArgs(args, 2));
-                InvokeRelativeEvent(args[0], argParser.TryParseInt(args[1]), parameters);
+                int intValue = argParser.TryParseInt(args[1]);
+
+                if (cache.IsIdCached(intValue)) {
+                    InvokeRelativeEvent(args[0], intValue, parameters);
+                } else {
+                    // Invoke a global event with an int parameter?
+                    GlobalEventHandler.InvokeEvent(args[0], intValue);
+                }
             } else {
                 InvokeGlobalEvent(args[0]);
             }
