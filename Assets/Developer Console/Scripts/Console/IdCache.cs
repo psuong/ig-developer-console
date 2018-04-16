@@ -1,10 +1,14 @@
-﻿using GlobalEvents;
+﻿using Console.UI;
+using GlobalEvents;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Console {
     [CreateAssetMenu(fileName = "Id Cache", menuName = "Developer Console/Id Cache")]   
     public class IdCache : ScriptableObject {
+        
+        [SerializeField, Tooltip("What color should the message be for displaying ids?")]
+        private Color messageColor = Color.green;
 
         private IDictionary<int, object> cache;
 
@@ -12,12 +16,14 @@ namespace Console {
             cache = new Dictionary<int, object>();
             GlobalEventHandler.SubscribeEvent<int, object>(Events.ConsoleEvents.CacheEvent, CacheId);
             GlobalEventHandler.SubscribeEvent<int>(Events.ConsoleEvents.RemoveEvent, RemoveId);
+            GlobalEventHandler.SubscribeEvent<int>(Events.ConsoleEvents.ShowIdEvent, DisplayCacheIds);
         }
 
         private void OnDisable() {
             cache.Clear();
             GlobalEventHandler.UnsubscribeEvent<int, object>(Events.ConsoleEvents.CacheEvent, CacheId);
             GlobalEventHandler.UnsubscribeEvent<int>(Events.ConsoleEvents.CacheEvent, RemoveId);
+            GlobalEventHandler.UnsubscribeEvent<int>(Events.ConsoleEvents.ShowIdEvent, DisplayCacheIds);
         }
         
         private void CacheId(int id, object instance) {
@@ -30,6 +36,19 @@ namespace Console {
 
         private void RemoveId(int id) {
             cache.Remove(id);
+        }
+
+        private void DisplayCacheIds(int size) {
+            int index = 0;
+            string message = "\n";
+            foreach(var entry in cache) {
+                message += string.Format("{0} | {1}\n", entry.Key, entry.Value);
+                index++;
+                if (index > size) {
+                    break;
+                }
+            }
+            ConsoleOutput.Log(message, messageColor);  
         }
 
         /// <summary>
@@ -49,6 +68,14 @@ namespace Console {
         /// <param name="id">The Id to remove.</param>
         public static void RemoveInstanceId(int id) {
             GlobalEventHandler.InvokeEvent<int>(Events.ConsoleEvents.RemoveEvent, id);
+        }
+        
+        /// <summary>
+        /// Is the Id stored?
+        /// </summary>
+        /// <returns>true, if the Id is stored.</returns>
+        public bool IsIdCached(int id) {
+            return cache.ContainsKey(id);
         }
         
         /// <summary>
