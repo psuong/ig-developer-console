@@ -19,5 +19,10 @@
         /// A readonly constant global event for removing the Instance Id.
         /// </summary>
         public readonly static string RemoveEvent = "Remove Id";
+        
+        /// <summary>
+        /// A readonly constant global event name for showing all the Ids to the console given a size.
+        /// </summary>
+        public readonly static string ShowIdEvent = "showids";
     }
 }

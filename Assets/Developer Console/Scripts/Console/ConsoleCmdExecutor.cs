@@ -69,7 +69,14 @@ namespace Console {
             
             if (args.Length > 1) {
                 var parameters = argParser.ParseParameters(CopyArgs(args, 2));
-                InvokeRelativeEvent(args[0], argParser.TryParseInt(args[1]), parameters);
+                int intValue = argParser.TryParseInt(args[1]);
+
+                if (cache.IsIdCached(intValue)) {
+                    InvokeRelativeEvent(args[0], intValue, parameters);
+                } else {
+                    // Invoke a global event with an int parameter?
+                    GlobalEventHandler.InvokeEvent(args[0], intValue);
+                }
             } else {
                 InvokeGlobalEvent(args[0]);
             }

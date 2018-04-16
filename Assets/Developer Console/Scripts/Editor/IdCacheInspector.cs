@@ -20,22 +20,24 @@ namespace Console.EditorTools {
         }
 
         private void DrawCacheTable() {
-            EditorGUILayout.LabelField("Cache Table", EditorStyles.boldLabel);
-            using (var group = new EditorGUILayout.HorizontalScope()) {
-                using (var idColumn = new EditorGUILayout.VerticalScope()) {
-                    EditorGUILayout.LabelField("Id", EditorStyles.boldLabel);
-                    foreach(var entry in cacheTable) {
-                        EditorGUILayout.LabelField(entry.Key.ToString());
+            try {
+                EditorGUILayout.LabelField("Cache Table", EditorStyles.boldLabel);
+                using (var group = new EditorGUILayout.HorizontalScope()) {
+                    using (var idColumn = new EditorGUILayout.VerticalScope()) {
+                        EditorGUILayout.LabelField("Id", EditorStyles.boldLabel);
+                        foreach(var entry in cacheTable) {
+                            EditorGUILayout.LabelField(entry.Key.ToString());
+                        }
                     }
-                }
 
-                using (var objectColumn = new EditorGUILayout.VerticalScope()) {
-                    EditorGUILayout.LabelField("Object Instance", EditorStyles.boldLabel);
-                    foreach(var entry in cacheTable) {
-                        EditorGUILayout.LabelField(entry.Value.ToString());
+                    using (var objectColumn = new EditorGUILayout.VerticalScope()) {
+                        EditorGUILayout.LabelField("Object Instance", EditorStyles.boldLabel);
+                        foreach(var entry in cacheTable) {
+                            EditorGUILayout.LabelField(entry.Value.ToString());
+                        }
                     }
                 }
-            }
+            } catch (System.NullReferenceException) {}
         }
 
         public override bool RequiresConstantRepaint() {
