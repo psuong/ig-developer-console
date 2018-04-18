@@ -6,6 +6,7 @@ namespace Console {
     public class ArgParser {
 
         internal readonly Regex eventNameRegex;
+        internal readonly Regex boolRegex;
         internal readonly Regex charRegex;
         internal readonly Regex intRegex;
         internal readonly Regex floatRegex;
@@ -13,14 +14,16 @@ namespace Console {
 
         public ArgParser() {
             eventNameRegex  = new Regex(@"\s");
+            boolRegex       = new Regex(@"^(?i)(true|false)$");
             charRegex       = new Regex(@"^\s{1}$");
             intRegex        = new Regex(@"^\d$");
             floatRegex      = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
             stringRegex     = new Regex(@"^.+");
         }
 
-        public ArgParser(string eventPattern, string charPattern, string intPattern, string floatPattern, string stringPattern) {
+        public ArgParser(string eventPattern, string boolPattern, string charPattern, string intPattern, string floatPattern, string stringPattern) {
             eventNameRegex  = new Regex(eventPattern);
+            boolRegex       = new Regex(boolPattern);
             charRegex       = new Regex(charPattern);
             intRegex        = new Regex(intPattern);
             floatRegex      = new Regex(floatPattern);
@@ -28,7 +31,9 @@ namespace Console {
         }
 
         private object GetParameterValue(string arg) {
-            if (IsArgInt(arg)) {
+            if (IsArgBool(arg)) {
+                return TryParseBool(arg);
+            } else if (IsArgInt(arg)) {
                 return TryParseInt(arg);
             } else if (IsArgFloat(arg)) {
                 return float.Parse(arg);
@@ -37,6 +42,10 @@ namespace Console {
             } else {
                 return arg;
             }
+        }
+
+        private bool IsArgBool(string arg) {
+            return boolRegex.IsMatch(arg);
         }
 
         private bool IsArgInt(string arg) {
@@ -61,6 +70,18 @@ namespace Console {
         /// <returns>True, if there is no space within the eventName".</returns>
         internal bool IsEventNameValid(string eventName) {
             return !eventNameRegex.IsMatch(eventName);
+        }
+        
+        /// <summary>
+        /// Attempst to parse a string to a bool if able, otherwise the default value
+        /// of the bool is returned.
+        /// </summary>
+        /// <param name="arg">The string to parse.</param>
+        /// <returns>The bool value of the arg.</returns>
+        internal bool TryParseBool(string arg) {
+            bool value;
+            bool.TryParse(arg, out value);
+            return value;
         }
         
         /// <summary>
