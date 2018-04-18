@@ -170,6 +170,13 @@ public class Health : MonoBehaviour {
 }
 ```
 
+For each cached object that you *explicitly* cache, the `IdCache` scriptable object will display the Id and the 
+instance the Id is bound to. This allows the Console to retrieve the instance of the object and invoke the relative event.
+The `IdCache` scriptable object is automatically placed into the `ConsoleCmdExecutor` when the script is **added** to a 
+gameObject or **resetted**.
+
+![id-cache-table](images/cache-table.png)
+
 In the video below, an agent can be stopped by providing the instance Id and allowing the console to 
 invoke the relative event. The code is similar to the sample code above.
 
