@@ -173,7 +173,7 @@ public class Health : MonoBehaviour {
 In the video below, an agent can be stopped by providing the instance Id and allowing the console to 
 invoke the relative event. The code is similar to the sample code above.
 
-[![stopping-a-single-ai](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://vimeo.com/265304164)
+[![stopping-a-single-ai](https://i.vimeocdn.com/video/695279910_260x146.jpg)](https://vimeo.com/265304164)
 
 ### Logging Events to Console ###
 Logging a custom message to the console uses the `GlobalEventHandler` internally and it takes one line of code! 
