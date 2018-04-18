@@ -34,15 +34,18 @@ namespace Console.EditorTools {
                     DrawPropertyInfo(r, prop, "Event Regex");
                     return;
                 case 1:
-                    DrawPropertyInfo(r, prop, "Char Regex");
+                    DrawPropertyInfo(r, prop, "Bool Regex");
                     return;
                 case 2:
-                    DrawPropertyInfo(r, prop, "Int Regex");
+                    DrawPropertyInfo(r, prop, "Char Regex");
                     return;
                 case 3:
-                    DrawPropertyInfo(r, prop, "Float Regex");
+                    DrawPropertyInfo(r, prop, "Int Regex");
                     return;
                 case 4:
+                    DrawPropertyInfo(r, prop, "Float Regex");
+                    return;
+                case 5:
                     DrawPropertyInfo(r, prop, "String Regex");
                     return;
                 default:
