@@ -146,6 +146,7 @@ Therefore, each instance Id and gameObject pair must be cached upon instantiatio
 ```
 using UnityEngine;
 using GlobalEvents;
+using Console;
 
 public class Health : MonoBehaviour {
 
@@ -168,6 +169,8 @@ public class Health : MonoBehaviour {
     }
 }
 ```
+
+![stopping-a-single-ai](images/stopping-ai.mp4)
 
 ### Logging Events to Console ###
 Logging a custom message to the console uses the `GlobalEventHandler` internally and it takes one line of code! 
