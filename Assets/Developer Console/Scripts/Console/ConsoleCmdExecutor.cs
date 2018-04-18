@@ -19,6 +19,7 @@ namespace Console {
         [SerializeField, HideInInspector]
         private string[] customRegexPatterns = new string[] {
             @"s",
+            @"^(?i)(true|false)$",
             @"^{1}$",
             @"^\d$",
             @"^[0-9]*(?:\.[0-9]*)?$",
@@ -34,7 +35,8 @@ namespace Console {
                     customRegexPatterns[1],
                     customRegexPatterns[2],
                     customRegexPatterns[3],
-                    customRegexPatterns[4]
+                    customRegexPatterns[4],
+                    customRegexPatterns[5]
                 ) : new ArgParser();
             Assert.IsNotNull(cache, "No IdCache was found!");
         }
