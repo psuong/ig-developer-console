@@ -19,12 +19,18 @@ namespace Console.Demo {
             // Subscribe all overloaded methods with their respective events
             RelativeEventHandler.SubscribeEvent("Heal", this, "Heal");
             RelativeEventHandler.SubscribeEvent("Damage", this, "Damage");
+
+            // Cache the instance Id
+            IdCache.CacheInstanceId(GetInstanceID(), this);
         }
 
         private void OnDisable() {
             // Unsubscribe all overloaded methods with their respective events
             RelativeEventHandler.UnsubscribeEvent("Heal", this, "Heal");
             RelativeEventHandler.UnsubscribeEvent("Damage", this, "Damage");
+
+            // Remove the instance Id
+            IdCache.RemoveInstanceId(GetInstanceID());
         }
 
         private void Heal(float amount) {

@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delimiter: 32
-  cache: {fileID: 0}
+  cache: {fileID: 11400000, guid: 7fa868c1ab6814ec391844f8161ccf10, type: 2}
   useCustomRegexPatterns: 0
   customRegexPatterns:
   - s
