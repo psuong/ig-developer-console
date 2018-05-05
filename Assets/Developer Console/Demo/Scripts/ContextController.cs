@@ -15,6 +15,11 @@ namespace Console.Demo {
         private List<Patrol> activeAIs;
         private List<Patrol> inactiveAIs;
 
+        private void Awake() {
+            activeAIs = new List<Patrol>();
+            inactiveAIs = new List<Patrol>();
+        }
+
         private void OnEnable() {
             GlobalEventHandler.SubscribeEvent<Patrol>("ToggleAI", SwapAgentState);
         }
@@ -24,13 +29,9 @@ namespace Console.Demo {
         }
         
         private void Start() {
-            activeAIs = new List<Patrol>();
-            inactiveAIs = new List<Patrol>();
-            
             // Stash the agents to an active list
             foreach(var agent in agents) {
                 activeAIs.Add(agent);
-                agent.UpdateAI();
             }
         }
 

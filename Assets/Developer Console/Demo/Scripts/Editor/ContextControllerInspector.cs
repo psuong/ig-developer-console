@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
-using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Console.Demo.EditorTools {
 
@@ -21,34 +21,37 @@ namespace Console.Demo.EditorTools {
             inactiveAgents = inactiveField.GetValue(target) as List<Patrol>;
         }
 
-        private void DrawAgentTable() {
-            EditorGUILayout.LabelField("Patrol Agents", EditorStyles.boldLabel);
+        private void DrawAgentTable () {
+            EditorGUILayout.LabelField ("Patrol Agents", EditorStyles.boldLabel);
 
-            using (var group = new EditorGUILayout.VerticalScope()) {
-                EditorGUILayout.LabelField("Active", EditorStyles.boldLabel);
-                try {
-                    foreach(var agent in activeAgents) {
-                        EditorGUILayout.LabelField(agent.name);
-                    }
-                } catch(System.NullReferenceException) {}
-            }
+            using (var group = new EditorGUILayout.HorizontalScope ()) {
+                using (var active = new EditorGUILayout.VerticalScope ()) {
+                    EditorGUILayout.LabelField ("Active", EditorStyles.boldLabel);
+                    try {
+                        foreach (var agent in activeAgents) {
+                            EditorGUILayout.LabelField (agent.name);
+                        }
+                    } catch (System.NullReferenceException) {}
+                }
 
-            using (var group = new EditorGUILayout.VerticalScope()) {
-                EditorGUILayout.LabelField("Active", EditorStyles.boldLabel);
-                try {
-                    foreach(var agent in inactiveAgents) {
-                        EditorGUILayout.LabelField(agent.name);
-                    }
-                } catch(System.NullReferenceException) {}
+                using (var inactive = new EditorGUILayout.VerticalScope ()) {
+                    EditorGUILayout.LabelField ("InActive", EditorStyles.boldLabel);
+                    try {
+                        foreach (var agent in inactiveAgents) {
+                            EditorGUILayout.LabelField (agent.name);
+                        }
+                    } catch (System.NullReferenceException) {}
+                }
             }
         }
 
-        public override bool RequiresConstantRepaint() {
+        public override bool RequiresConstantRepaint () {
             return EditorApplication.isPlaying;
         }
 
-        public override void OnInspectorGUI() {
-            DrawDefaultInspector();
+        public override void OnInspectorGUI () {
+            DrawDefaultInspector ();
+            DrawAgentTable ();
         }
 
     }

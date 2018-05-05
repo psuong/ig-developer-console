@@ -12,13 +12,11 @@ namespace Console.Demo {
         private float stoppingDistance = 1.5f;
 
         private NavMeshAgent agent;
-        private AnimatorController controller;
         private int index = -1;
         
         private void Start() {
             agent = GetComponent<NavMeshAgent>();
-            controller = GetComponent<AnimatorController>();
-            
+            IdCache.CacheInstanceId(GetInstanceID(), this);
         }
         
         /**
