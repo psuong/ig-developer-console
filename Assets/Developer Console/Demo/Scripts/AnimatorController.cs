@@ -57,7 +57,11 @@ namespace Console.Demo {
 
             return magnitude < 0 ? -1 : 1;
         }
-
+        
+        /**\
+         * Maps a range of 0 degrees to 180 degrees between 0 and 1 to pass into the horizontal/vertical
+         * parameters of the animator.
+         */
         private float NormalizeSteerAngle() {
             var dir = agent.nextPosition - transform.position;
             dir.y = 0;
