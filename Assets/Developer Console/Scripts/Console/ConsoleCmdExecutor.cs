@@ -75,9 +75,9 @@ namespace Console {
 
                 if (cache.IsIdCached(intValue)) {
                     InvokeRelativeEvent(args[0], intValue, parameters);
-                } else {
-                    // Invoke a global event with an int parameter?
-                    GlobalEventHandler.InvokeEvent(args[0], intValue);
+
+                    var objectArg = cache[intValue];
+                    GlobalEventHandler.InvokeEvent(args[0], System.Convert.ChangeType(objectArg, objectArg.GetType()));
                 }
             } else {
                 InvokeGlobalEvent(args[0]);

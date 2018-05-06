@@ -64,9 +64,13 @@ namespace Console.Demo {
          * Just take the agent as a param and swap the state without knowing which state the agent is in.
          */
         private void SwapAgentState(Patrol agent) {
+            Debug.Log("Invokved");
             var isInactive = SwapAgentState(agent, activeAIs, inactiveAIs);
-            if (!isInactive) {
+            if (isInactive) {
+                UI.ConsoleOutput.Log(string.Format("Swapped {0} to inactive", agent.name), Color.green);
+            } else {
                 SwapAgentState(agent, inactiveAIs, activeAIs);
+                UI.ConsoleOutput.Log(string.Format("Swapped {0} to active", agent.name), Color.green);
             }
         }
     }
