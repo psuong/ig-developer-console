@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
 
 namespace GlobalEvents {
@@ -6,8 +7,10 @@ namespace GlobalEvents {
     using Type = System.Type;
 
     public static class RelativeEventHandler {
-        
-        private static IDictionary<string, IDictionary<object, IList<string>>> relativeEventTable = new Dictionary<string, IDictionary<object, IList<string>>>();
+
+        private static IDictionary<string, IDictionary<object, Delegate>> relativeEventTable = new Dictionary<string, IDictionary<object, Delegate>>();
+
+        /**
 
         private static bool TryAddMethod(string method, ref IList<string> subscribedMethods) {
             if (!subscribedMethods.Contains(method)) {
@@ -121,5 +124,6 @@ namespace GlobalEvents {
                 }
             }
         }
+        **/
     }
 }
