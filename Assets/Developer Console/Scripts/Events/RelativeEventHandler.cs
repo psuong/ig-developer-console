@@ -56,7 +56,14 @@ namespace GlobalEvents {
                 UnsubscribeEvent(eventTable, eventName, handler);
             }
         }
+
+        // TODO: Add multi arg event subscription.
         
+        /// <summary>
+        /// Invokes an event relative to an object, given an object and the event name.
+        /// </summary>
+        /// <param name="key">The object to invoke an event on.</param>
+        /// <param name="eventName">The name of the event to invoke.</param>
         public static void InvokeEvent(object key, string eventName) {
             var relativeEvent = default(IDictionary<string, Delegate>);
             if (relativeEventTable.TryGetValue(key, out relativeEvent)) {
@@ -65,6 +72,26 @@ namespace GlobalEvents {
                     action();
                 }
             }
+        }
+
+        /// <summary>
+        /// Subscribes a method with no arguments to the event table.
+        /// </summary>
+        /// <param name="instance">The object instance to subscribe.</param>
+        /// <param name="eventName">The name of the event.</param>
+        /// <param name="action">The action to subscribe.</param>
+        public static void SubscribeEvent(object instance, string eventName, Action action) {
+            SubscribeEvent(instance, eventName, action as Delegate);
+        }
+        
+        /// <summary>
+        /// Subscribes a method with 1 arugment to the event table.
+        /// </summary>
+        /// <param name="instance">The object instance to subscribe.</param>
+        /// <param name="eventName">The name of the event to subscribe.</param>
+        /// <param name="action">The action with 1 arg to subscribe.</param>
+        public static void SubscribeEvent<T1>(object instance, string eventName, Action<T1> action) {
+            SubscribeEvent(instance, eventName, action as Delegate);
         }
     }
 }
