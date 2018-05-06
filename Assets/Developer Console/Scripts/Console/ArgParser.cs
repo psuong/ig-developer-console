@@ -43,24 +43,39 @@ namespace Console {
                 return arg;
             }
         }
-
-        private bool IsArgBool(string arg) {
+        
+        /// <summary>
+        /// Is the argument a bool?
+        /// </summary>
+        internal bool IsArgBool(string arg) {
             return boolRegex.IsMatch(arg);
         }
-
-        private bool IsArgInt(string arg) {
+        
+        /// <summary>
+        /// Is the argument an integer?
+        /// </summary>
+        internal bool IsArgInt(string arg) {
             return intRegex.IsMatch(arg);
         }
-
-        private bool IsArgFloat(string arg) {
+        
+        /// <summary>
+        /// Is the argument a floating point number?
+        /// </summary>
+        internal bool IsArgFloat(string arg) {
             return floatRegex.IsMatch(arg);
         }
-
-        private bool IsArgString(string arg) {
+            
+        /// <summary>
+        /// Is the argument a string?
+        /// </summary>
+        internal bool IsArgString(string arg) {
             return stringRegex.IsMatch(arg);
         }
-
-        private bool IsArgChar(String arg) {
+        
+        /// <summary>
+        /// Is the argument a single character?
+        /// </summary>
+        internal bool IsArgChar(String arg) {
             return charRegex.IsMatch(arg);
         }
 

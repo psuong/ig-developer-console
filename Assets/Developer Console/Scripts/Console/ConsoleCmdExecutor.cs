@@ -68,15 +68,17 @@ namespace Console {
         public void TryExecuteCommand(string input) {
             // Trim the input of trailing white spaces and split the string into an array of strings.
             var args = input.Trim().Split(delimiter);
-            
+
             if (args.Length > 1) {
                 var parameters = argParser.ParseParameters(CopyArgs(args, 2));
                 int intValue = argParser.TryParseInt(args[1]);
 
                 if (cache.IsIdCached(intValue)) {
                     InvokeRelativeEvent(args[0], intValue, parameters);
+
+                    var objectArg = cache[intValue];
+                    GlobalEventHandler.InvokeEvent(args[0], System.Convert.ChangeType(objectArg, objectArg.GetType()));
                 } else {
-                    // Invoke a global event with an int parameter?
                     GlobalEventHandler.InvokeEvent(args[0], intValue);
                 }
             } else {
