@@ -16,9 +16,9 @@ It is a miminalistic Unity tool and comes packaged with:
 Allowing *any* developer or user to interact and modify/execute controllable properties or functions 
 when the game is **built** or in **play mode**.
 
-#### **NOTE**: The project is still in *early* beta and I'll be updating/testing it. ####
-
 ## How does it work? ##
+
+For more explicit documentation please see the [wiki](https://github.com/psuong/ig-developer-console/wiki).
 
 Methods are subscribed to one of two internal tables within the
 
