@@ -43,9 +43,16 @@ namespace Console.Demo {
         /// Call this in the update loop.
         /// </summary>
         public void UpdateAI() {
+            agent.isStopped = false;
             if (IsNearDestination()) {
                 MoveToNextPoint();
             }
+        }
+        
+        /// <summary>
+        /// </summary>
+        public void UpdateInactiveAI() {
+            agent.isStopped = true;
         }
     }
 }

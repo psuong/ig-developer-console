@@ -23,6 +23,6 @@
         /// <summary>
         /// A readonly constant global event name for showing all the Ids to the console given a size.
         /// </summary>
-        public readonly static string ShowIdEvent = "showids";
+        public readonly static string ShowIdEvent = "ShowIds";
     }
 }

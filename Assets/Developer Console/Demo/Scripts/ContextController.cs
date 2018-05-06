@@ -21,11 +21,11 @@ namespace Console.Demo {
         }
 
         private void OnEnable() {
-            GlobalEventHandler.SubscribeEvent<Patrol>("ToggleAI", SwapAgentState);
+            GlobalEventHandler.SubscribeEvent<object>("ToggleAI", SwapAgentState);
         }
 
         private void OnDisable() {
-            GlobalEventHandler.UnsubscribeEvent<Patrol>("ToggleAI", SwapAgentState);
+            GlobalEventHandler.UnsubscribeEvent<object>("ToggleAI", SwapAgentState);
         }
         
         private void Start() {
@@ -37,6 +37,7 @@ namespace Console.Demo {
 
         private void Update() {
             UpdateActiveAgents();
+            UpdateInactiveAgents();
         }
         
         /**
@@ -45,6 +46,12 @@ namespace Console.Demo {
         private void UpdateActiveAgents() {
             for (int i = 0; i < activeAIs.Count; i++) {
                 activeAIs[i].UpdateAI();
+            }
+        }
+
+        private void UpdateInactiveAgents() {
+            for (int i = 0; i < inactiveAIs.Count; i++) {
+                inactiveAIs[i].UpdateInactiveAI();
             }
         }
         
@@ -63,14 +70,14 @@ namespace Console.Demo {
         /**
          * Just take the agent as a param and swap the state without knowing which state the agent is in.
          */
-        private void SwapAgentState(Patrol agent) {
-            Debug.Log("Invokved");
-            var isInactive = SwapAgentState(agent, activeAIs, inactiveAIs);
-            if (isInactive) {
-                UI.ConsoleOutput.Log(string.Format("Swapped {0} to inactive", agent.name), Color.green);
+        private void SwapAgentState(object agent) {
+            var arg = agent as Patrol;
+            var isInactive = SwapAgentState(arg, activeAIs, inactiveAIs);
+            if (isInactive && arg != null) {
+                UI.ConsoleOutput.Log(string.Format("Swapped {0} to inactive", arg.name), Color.green);
             } else {
-                SwapAgentState(agent, inactiveAIs, activeAIs);
-                UI.ConsoleOutput.Log(string.Format("Swapped {0} to active", agent.name), Color.green);
+                SwapAgentState(arg, inactiveAIs, activeAIs);
+                UI.ConsoleOutput.Log(string.Format("Swapped {0} to active", arg.name), Color.green);
             }
         }
     }

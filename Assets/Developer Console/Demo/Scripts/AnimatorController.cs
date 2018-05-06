@@ -32,19 +32,23 @@ namespace Console.Demo {
         }
 
         private void OnAnimatorMove() {
-            var direction = agent.steeringTarget - transform.position;
-            direction.y = 0;
-            var steeringDirection = GetRelativeDirection(direction);
-            var steer = steeringDirection * NormalizeSteerAngle();
-            
-            var rotation = Vector3.RotateTowards(transform.forward, direction, Time.deltaTime, 0f);
-            rotation.y = 0;
-            transform.rotation = Quaternion.LookRotation(rotation);
+            if (!agent.isStopped) {
+                var direction = agent.steeringTarget - transform.position;
+                direction.y = 0;
+                var steeringDirection = GetRelativeDirection(direction);
+                var steer = steeringDirection * NormalizeSteerAngle();
+                
+                var rotation = Vector3.RotateTowards(transform.forward, direction, Time.deltaTime, 0f);
+                rotation.y = 0;
+                transform.rotation = Quaternion.LookRotation(rotation);
 
-            transform.position = transform.position + animator.deltaPosition;
-            agent.nextPosition = transform.position;
+                transform.position = transform.position + animator.deltaPosition;
+                agent.nextPosition = transform.position;
 
-            UpdateAnimParams(steer, 1f);
+                UpdateAnimParams(steer, 1f);
+            } else {
+                UpdateAnimParams(0, 0);
+            }
         }
 
         /**

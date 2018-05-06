@@ -78,6 +78,8 @@ namespace Console {
 
                     var objectArg = cache[intValue];
                     GlobalEventHandler.InvokeEvent(args[0], System.Convert.ChangeType(objectArg, objectArg.GetType()));
+                } else {
+                    GlobalEventHandler.InvokeEvent(args[0], intValue);
                 }
             } else {
                 InvokeGlobalEvent(args[0]);
