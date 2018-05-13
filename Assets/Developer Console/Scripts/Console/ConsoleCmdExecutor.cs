@@ -57,7 +57,9 @@ namespace Console {
         }
         
         private void InvokeRelativeEvent(string eventName, int instanceId, object[] args) {
+            /*
             RelativeEventHandler.InvokeEvent(eventName, cache[instanceId], args);
+            */
         }
 
         /// <summary>
