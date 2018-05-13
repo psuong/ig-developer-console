@@ -29,8 +29,13 @@ namespace Console {
             floatRegex      = new Regex(floatPattern);
             stringRegex     = new Regex(stringPattern);
         }
-
-        private object GetParameterValue(string arg) {
+        
+        /// <summary>
+        /// Parses the string and returns the value of the interpretted argument.
+        /// </summary>
+        /// <param name="arg">The argument to parse.</param>
+        /// <returns>The interpretted value of the string.</returns>
+        internal dynamic GetParameterValue(string arg) {
             if (IsArgBool(arg)) {
                 return TryParseBool(arg);
             } else if (IsArgInt(arg)) {
