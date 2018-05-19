@@ -8,7 +8,8 @@ namespace Console {
         internal readonly Regex eventNameRegex;
         internal readonly Regex boolRegex;
         internal readonly Regex charRegex;
-        internal readonly Regex intRegex; internal readonly Regex floatRegex;
+        internal readonly Regex intRegex;
+        internal readonly Regex floatRegex;
         internal readonly Regex stringRegex;
 
         public ArgParser() {
