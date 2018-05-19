@@ -21,8 +21,8 @@ namespace Console {
             @"s",
             @"^(?i)(true|false)$",
             @"^{1}$",
-            @"^\d$",
-            @"^[0-9]*(?:\.[0-9]*)?$",
+            @"^[-]{0,1}[\d]*$",
+            @"^[-]{0,1}[0-9]*(?:\.[0-9]*)?$",
             @"^.+"
         };
 
@@ -38,6 +38,7 @@ namespace Console {
                     customRegexPatterns[4],
                     customRegexPatterns[5]
                 ) : new ArgParser();
+
             Assert.IsNotNull(cache, "No IdCache was found!");
         }
 
@@ -52,12 +53,65 @@ namespace Console {
             return remainingArgs;
         }
 
-        private void InvokeGlobalEvent(string eventName) {
-            GlobalEventHandler.InvokeEvent(eventName);
+        private void InvokeGlobalEvent(string eventName, string[] args) {
+            switch(args.Length) {
+                case 4:
+                    GlobalEventHandler.InvokeEvent(eventName, 
+                            argParser.GetParameterValue(args[0]), argParser.GetParameterValue(args[1]),
+                            argParser.GetParameterValue(args[2]), argParser.GetParameterValue(args[3]));
+                    return;
+                case 3:
+                    GlobalEventHandler.InvokeEvent(eventName, 
+                            argParser.GetParameterValue(args[0]), argParser.GetParameterValue(args[1]),
+                            argParser.GetParameterValue(args[2]));
+                    return;
+                case 2:
+                    GlobalEventHandler.InvokeEvent(eventName, 
+                            argParser.GetParameterValue(args[0]), argParser.GetParameterValue(args[1]));
+                    return;
+                case 1:
+                    GlobalEventHandler.InvokeEvent(eventName, 
+                            argParser.GetParameterValue(args[0]));
+                    return;
+                default:
+                    return;
+            }
         }
-        
-        private void InvokeRelativeEvent(string eventName, int instanceId, object[] args) {
-            RelativeEventHandler.InvokeEvent(eventName, cache[instanceId], args);
+
+        private void InvokeRelativeEvent(string eventName, string[] args) {
+            int id = argParser.GetParameterValue(args[0]);
+
+            if (cache.IsIdCached(id)) {
+                var instance = cache[id];
+                switch(args.Length) {
+                    case 5:
+                        RelativeEventHandler.InvokeEvent(eventName, instance, 
+                                argParser.GetParameterValue(args[1]), argParser.GetParameterValue(args[2]),
+                                argParser.GetParameterValue(args[3]), argParser.GetParameterValue(args[4]));
+                        return;
+                    case 4:
+                        RelativeEventHandler.InvokeEvent(eventName, instance, 
+                                argParser.GetParameterValue(args[1]), argParser.GetParameterValue(args[2]),
+                                argParser.GetParameterValue(args[3]));
+                        return;
+                    case 3:
+                        RelativeEventHandler.InvokeEvent(eventName, instance, 
+                                argParser.GetParameterValue(args[1]), argParser.GetParameterValue(args[2]));
+                        return;
+                    case 2:
+                        RelativeEventHandler.InvokeEvent(eventName, instance, 
+                                argParser.GetParameterValue(args[1]));
+                        return;
+                    case 1:
+                        RelativeEventHandler.InvokeEvent(eventName, instance);
+                        return;
+                    default:
+#if UNITY_EDITOR
+                        Debug.LogErrorFormat("Cannot invoke event: {0}!", eventName);
+#endif
+                        return;
+                }
+            }
         }
 
         /// <summary>
@@ -68,21 +122,15 @@ namespace Console {
         public void TryExecuteCommand(string input) {
             // Trim the input of trailing white spaces and split the string into an array of strings.
             var args = input.Trim().Split(delimiter);
+            var @event = args[0];
 
             if (args.Length > 1) {
-                var parameters = argParser.ParseParameters(CopyArgs(args, 2));
-                int intValue = argParser.TryParseInt(args[1]);
-
-                if (cache.IsIdCached(intValue)) {
-                    InvokeRelativeEvent(args[0], intValue, parameters);
-
-                    var objectArg = cache[intValue];
-                    GlobalEventHandler.InvokeEvent(args[0], System.Convert.ChangeType(objectArg, objectArg.GetType()));
-                } else {
-                    GlobalEventHandler.InvokeEvent(args[0], intValue);
-                }
+                var @params = CopyArgs(args, 1);
+                
+                InvokeGlobalEvent(@event, @params);
+                InvokeRelativeEvent(@event, @params);
             } else {
-                InvokeGlobalEvent(args[0]);
+                GlobalEventHandler.InvokeEvent(@event);
             }
         }
     }
