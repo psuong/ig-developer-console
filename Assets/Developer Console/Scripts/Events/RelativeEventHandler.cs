@@ -35,7 +35,6 @@ namespace GlobalEvents {
                 var entryTable = new Dictionary<object, Delegate>();
                 SubscribeRelativeEvent(instance, handler, entryTable);
                 relativeEventTable.Add(eventName, entryTable);
-                UnityEngine.Debug.Log("New event subscription");
             }
         }
 
@@ -56,9 +55,9 @@ namespace GlobalEvents {
         /// <summary>
         /// Invokes an event relative to an object with no arguments.
         /// </summary>
-        /// <param name="instance">The object to invoke a relative event to.</param>
         /// <param name="eventName">The relative event to invoke.</param>
-        public static void InvokeEvent(object instance, string eventName) {
+        /// <param name="instance">The object to invoke a relative event to.</param>
+        public static void InvokeEvent(string eventName, object instance) {
             var action = GetRelativeEvent(eventName, instance) as Action;
             if (action != null) {
                 action();
@@ -71,7 +70,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object to invoke a relative event to.</param>
         /// <param name="eventName">The relative event to invoke.</param>
         /// <param name="arg1">The parameter needed to invoke the event.</param>
-        public static void InvokeEvent<T1>(object instance, string eventName, T1 arg1) {
+        public static void InvokeEvent<T1>(string eventName, object instance, T1 arg1) {
             var action = GetRelativeEvent(eventName, instance) as Action<T1>;
             if (action != null) {
                 action(arg1);
@@ -85,7 +84,7 @@ namespace GlobalEvents {
         /// <param name="eventName">The relative event to invoke.</param>
         /// <param name="arg1">The 1st parameter needed to invoke the event.</param>
         /// <param name="arg2">The 2nd parameter needed to invoke the event.</param>
-        public static void InvokeEvent<T1, T2>(object instance, string eventName, T1 arg1, T2 arg2) {
+        public static void InvokeEvent<T1, T2>(string eventName, object instance, T1 arg1, T2 arg2) {
             var action = GetRelativeEvent(eventName, instance) as Action<T1, T2>;
             if (action != null) {
                 action(arg1, arg2);
@@ -100,7 +99,7 @@ namespace GlobalEvents {
         /// <param name="arg1">The 1st parameter needed to invoke the event.</param>
         /// <param name="arg2">The 2nd parameter needed to invoke the event.</param>
         /// <param name="arg3">The 3rd parameter needed to invoke the event.</param>
-        public static void InvokeEvent<T1, T2, T3>(object instance, string eventName, T1 arg1, T2 arg2, T3 arg3) {
+        public static void InvokeEvent<T1, T2, T3>(string eventName, object instance, T1 arg1, T2 arg2, T3 arg3) {
             var action = GetRelativeEvent(eventName, instance) as Action<T1, T2, T3>;
             if (action != null) {
                 action(arg1, arg2, arg3);
@@ -110,13 +109,13 @@ namespace GlobalEvents {
         /// <summary>
         /// Invokes an event relative to an object 4 arguments.
         /// </summary>
-        /// <param name="instance">The object to invoke a relative event to.</param>
         /// <param name="eventName">The relative event to invoke.</param>
+        /// <param name="instance">The object to invoke a relative event to.</param>
         /// <param name="arg1">The 1st parameter needed to invoke the event.</param>
         /// <param name="arg2">The 2nd parameter needed to invoke the event.</param>
         /// <param name="arg3">The 3rd parameter needed to invoke the event.</param>
         /// <param name="arg4">The 4th parameter needed to invoke the event.</param>
-        public static void InvokeEvent<T1, T2, T3, T4>(object instance, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
+        public static void InvokeEvent<T1, T2, T3, T4>(string eventName, object instance, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
             var action = GetRelativeEvent(eventName, instance) as Action<T1, T2, T3, T4>;
             if (action != null) {
                 action(arg1, arg2, arg3, arg4);
@@ -129,7 +128,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to subscribe</param>
         /// <param name="eventName">The event identifier to subscribe to.</param>
         /// <param name="action">A method with no parameters to subscribe.</param>
-        public static void SubscribeEvent(object instance, string eventName, Action action) {
+        public static void SubscribeEvent(string eventName, object instance, Action action) {
             SubscribeEvent(eventName, instance, action as Delegate);
         }
 
@@ -139,7 +138,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to subscribe</param>
         /// <param name="eventName">The event identifier to subscribe to.</param>
         /// <param name="action">A method with 1 parameter to subscribe.</param>
-        public static void SubscribeEvent<T1>(object instance, string eventName, Action<T1> action) {
+        public static void SubscribeEvent<T1>(string eventName, object instance, Action<T1> action) {
             SubscribeEvent(eventName, instance, action as Delegate);
         }
 
@@ -149,7 +148,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to subscribe</param>
         /// <param name="eventName">The event identifier to subscribe to.</param>
         /// <param name="action">A method with 2 parameters to subscribe.</param>
-        public static void SubscribeEvent<T1, T2>(object instance, string eventName, Action<T1, T2> action) {
+        public static void SubscribeEvent<T1, T2>(string eventName, object instance, Action<T1, T2> action) {
             SubscribeEvent(eventName, instance, action as Delegate);
         }
 
@@ -159,7 +158,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to subscribe</param>
         /// <param name="eventName">The event identifier to subscribe to.</param>
         /// <param name="action">A method with 3 parameters to subscribe.</param>
-        public static void SubscribeEvent<T1, T2, T3>(object instance, string eventName, Action<T1, T2, T3> action) {
+        public static void SubscribeEvent<T1, T2, T3>(string eventName, object instance, Action<T1, T2, T3> action) {
             SubscribeEvent(eventName, instance, action as Delegate);
         }
 
@@ -169,7 +168,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to subscribe</param>
         /// <param name="eventName">The event identifier to subscribe to.</param>
         /// <param name="action">A method with 4 parameters to subscribe.</param>
-        public static void SubscribeEvent<T1, T2, T3, T4>(object instance, string eventName, Action<T1, T2, T3, T4> action) {
+        public static void SubscribeEvent<T1, T2, T3, T4>(string eventName, object instance, Action<T1, T2, T3, T4> action) {
             SubscribeEvent(eventName, instance, action as Delegate);
         }
 
@@ -179,7 +178,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to remove a relative event from.</param>
         /// <param name="eventName">The event identifier to remove a relative event from.</param>
         /// <param name="action">The method to remove the relative event from.</param>
-        public static void UnsubscribeEvent(object instance, string eventName, Action action) {
+        public static void UnsubscribeEvent(string eventName, object instance, Action action) {
             UnsubscribeEvent(eventName, instance, action as Delegate);
         }
 
@@ -189,7 +188,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to remove a relative event from.</param>
         /// <param name="eventName">The event identifier to remove a relative event from.</param>
         /// <param name="action">The method to remove the relative event from.</param>
-        public static void UnsubscribeEvent<T1>(object instance, string eventName, Action<T1> action) {
+        public static void UnsubscribeEvent<T1>(string eventName, object instance, Action<T1> action) {
             UnsubscribeEvent(eventName, instance, action as Delegate);
         }
 
@@ -199,7 +198,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to remove a relative event from.</param>
         /// <param name="eventName">The event identifier to remove a relative event from.</param>
         /// <param name="action">The method to remove the relative event from.</param>
-        public static void UnsubscribeEvent<T1, T2>(object instance, string eventName, Action<T1, T2> action) {
+        public static void UnsubscribeEvent<T1, T2>(string eventName, object instance, Action<T1, T2> action) {
             UnsubscribeEvent(eventName, instance, action as Delegate);
         }
 
@@ -209,7 +208,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to remove a relative event from.</param>
         /// <param name="eventName">The event identifier to remove a relative event from.</param>
         /// <param name="action">The method to remove the relative event from.</param>
-        public static void UnsubscribeEvent<T1, T2, T3>(object instance, string eventName, Action<T1, T2, T3> action) {
+        public static void UnsubscribeEvent<T1, T2, T3>(string eventName, object instance, Action<T1, T2, T3> action) {
             UnsubscribeEvent(eventName, instance, action as Delegate);
         }
 
@@ -219,7 +218,7 @@ namespace GlobalEvents {
         /// <param name="instance">The object instance to remove a relative event from.</param>
         /// <param name="eventName">The event identifier to remove a relative event from.</param>
         /// <param name="action">The method to remove the relative event from.</param>
-        public static void UnsubscribeEvent<T1, T2, T3, T4>(object instance, string eventName, Action<T1, T2, T3, T4> action) {
+        public static void UnsubscribeEvent<T1, T2, T3, T4>(string eventName, object instance, Action<T1, T2, T3, T4> action) {
             UnsubscribeEvent(eventName, instance, action as Delegate);
         }
     }
