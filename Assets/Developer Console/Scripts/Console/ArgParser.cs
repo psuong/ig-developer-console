@@ -16,8 +16,8 @@ namespace Console {
             eventNameRegex  = new Regex(@"\s");
             boolRegex       = new Regex(@"^(?i)(true|false)$");
             charRegex       = new Regex(@"^\s{1}$");
-            intRegex        = new Regex(@"^\d$");
-            floatRegex      = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
+            intRegex        = new Regex(@"^[-]{0,1}[\d]*$");
+            floatRegex      = new Regex(@"^[-]{0,1}[0-9]*(?:\.[0-9]*)?$");
             stringRegex     = new Regex(@"^.+");
         }
 
@@ -36,9 +36,9 @@ namespace Console {
             } else if (IsArgInt(arg)) {
                 return TryParseInt(arg);
             } else if (IsArgFloat(arg)) {
-                return float.Parse(arg);
+                return TryParseFloat(arg);
             } else if (IsArgChar(arg)) {
-                return char.Parse(arg);
+                return TryParseChar(arg);
             } else {
                 return arg;
             }
@@ -96,6 +96,18 @@ namespace Console {
         internal bool TryParseBool(string arg) {
             bool value;
             bool.TryParse(arg, out value);
+            return value;
+        }
+        
+        /// <summary>
+        /// Attempts to parse a string to a bool if able, otherwise the default value
+        /// of the char is returned.
+        /// </summary>
+        /// <param name="arg">The string to parse.</param>
+        /// <returns>The char value of the arg.</returns>
+        internal char TryParseChar(string arg) {
+            char value;
+            char.TryParse(arg, out value);
             return value;
         }
         
