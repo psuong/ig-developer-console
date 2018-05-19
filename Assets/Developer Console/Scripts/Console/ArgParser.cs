@@ -17,7 +17,7 @@ namespace Console {
             boolRegex       = new Regex(@"^(?i)(true|false)$");
             charRegex       = new Regex(@"^\s{1}$");
             intRegex        = new Regex(@"^[-]{0,1}[\d]*$");
-            floatRegex      = new Regex(@"^[0-9]{0,1}*(?:\.[0-9]*)?$");
+            floatRegex      = new Regex(@"^[-]{0,1}[0-9]*(?:\.[0-9]*)?$");
             stringRegex     = new Regex(@"^.+");
         }
 

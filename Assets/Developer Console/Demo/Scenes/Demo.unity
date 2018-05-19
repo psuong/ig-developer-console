@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571343, b: 0.30692208, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -157,6 +157,21 @@ Prefab:
       propertyPath: console
       value: 
       objectReference: {fileID: 1191189622}
+    - target: {fileID: 114375444367147736, guid: 8ef6c8b4e9b6d4abb9317609b78b421f,
+        type: 2}
+      propertyPath: useCustomRegexPatterns
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114375444367147736, guid: 8ef6c8b4e9b6d4abb9317609b78b421f,
+        type: 2}
+      propertyPath: customRegexPatterns.Array.data[3]
+      value: ^[-]{0,1}[\d]*$
+      objectReference: {fileID: 0}
+    - target: {fileID: 114375444367147736, guid: 8ef6c8b4e9b6d4abb9317609b78b421f,
+        type: 2}
+      propertyPath: customRegexPatterns.Array.data[4]
+      value: ^[-]{0,1}[0-9]*(?:\.[0-9]*)?$
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8ef6c8b4e9b6d4abb9317609b78b421f, type: 2}
   m_IsPrefabParent: 0
