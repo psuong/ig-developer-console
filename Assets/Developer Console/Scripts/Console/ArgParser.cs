@@ -132,7 +132,7 @@ namespace Console {
         /// value of the float is returned.
         /// </summary>
         /// <param name="arg">The string to parse.</param>
-        /// <returns>The float value of the arg.</param>
+        /// <returns>The float value of the arg.</returns>
         internal float TryParseFloat(string arg) {
             float value;
             float.TryParse(arg, out value);
