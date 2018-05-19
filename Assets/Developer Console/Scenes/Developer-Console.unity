@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571343, b: 0.30692208, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -599,6 +599,11 @@ Prefab:
       propertyPath: m_Constraint
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 224956173165885286, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000019324181
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ae7e754cc7774dab88c2bb97e3d7a91, type: 2}
   m_IsPrefabParent: 0
@@ -638,8 +643,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1032604112}
-  - component: {fileID: 1032604111}
-  - component: {fileID: 1032604113}
   m_Layer: 0
   m_Name: '[Event Tester]'
   m_TagString: Untagged
@@ -647,20 +650,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1032604111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1032604110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4a78ee6603124c4baef3e23d31f113f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventName: Test Event
-  executeEventKey: 122
-  health: {fileID: 0}
 --- !u!4 &1032604112
 Transform:
   m_ObjectHideFlags: 0
@@ -674,19 +663,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1032604113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1032604110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91883b10ed5e641618bdb6f3362e3879, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  isInvincible: 0
 --- !u!1 &1191189622 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1674134149860196, guid: 0ae7e754cc7774dab88c2bb97e3d7a91,
