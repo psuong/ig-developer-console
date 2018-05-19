@@ -37,7 +37,9 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-### VisualStudioCode ###
+# End of https://www.gitignore.io/api/unity,visualstudiocode
+
+### Visual Studio Code ###
 .vscode/*
 
 ### Vim ###
@@ -46,9 +48,5 @@ sysinfo.txt
 ### OSX ###
 *.DS_Store
 
-
-# End of https://www.gitignore.io/api/unity,visualstudiocode
-
 # Local Testing Folder
-/Assets/Test*
-/Assets/Developer\ Console/Test*
+*Tests*
