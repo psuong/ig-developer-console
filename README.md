@@ -16,6 +16,9 @@ It is a miminalistic Unity tool and comes packaged with:
 Allowing *any* developer or user to interact and modify/execute controllable properties or functions 
 when the game is **built** or in **play mode**.
 
+## IMPORTANT ##
+The current repository is getting refactored to ***only*** support .NET4x and higher.
+
 ## How does it work? ##
 
 For more explicit documentation please see the [wiki](https://github.com/psuong/ig-developer-console/wiki).
