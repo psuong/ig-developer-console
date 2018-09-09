@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Collections.Generic;
 
-namespace GlobalEvents {
+namespace Console {
 
     using Type = System.Type;
 

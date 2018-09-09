@@ -1,12 +1,20 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
-namespace GlobalEvents {
+namespace Console {
 
     /// <summary>
     /// Stores global events to be freely accessed on a global level.
     /// </summary>
     public static class GlobalEventHandler {
+
+        /// <summary>
+        /// Returns a read only version of the global event table.
+        /// </summary>
+        public static IReadOnlyDictionary<string, Delegate> GlobalEventTable {
+            get { return new ReadOnlyDictionary<string, Delegate>(globalEventTable); }
+        }
 
         private static IDictionary<string, Delegate> globalEventTable = new Dictionary<string, Delegate>();
 
@@ -37,10 +45,7 @@ namespace GlobalEvents {
         /// </summary>
         /// <param name="eventName">The identifier for the event.</param>
         public static void InvokeEvent(string eventName) {
-            var action = GetDelegate(eventName) as Action;
-            if (action != null) {
-                action();
-            }
+            (GetDelegate(eventName) as Action)?.Invoke();
         }
 
         /// <summary>
@@ -48,10 +53,7 @@ namespace GlobalEvents {
         /// <param name="eventName">The identifier for the event.</param>
         /// <param name="arg1">The first argument to invoke the global event.</param>
         public static void InvokeEvent<T1>(string eventName, T1 arg1) {
-            var action = GetDelegate(eventName) as Action<T1>;
-            if (action != null) {
-                action(arg1);
-            }
+            (GetDelegate(eventName) as Action<T1>)?.Invoke(arg1);
         }
 
         /// <summary> 
@@ -61,10 +63,7 @@ namespace GlobalEvents {
         /// <param name="arg1">The first argument to invoke the global event.</param>
         /// <param name="arg2">The second argument to invoke the global event.</param>
         public static void InvokeEvent<T1, T2>(string eventName, T1 arg1, T2 arg2) {
-            var action = GetDelegate(eventName) as Action<T1, T2>;
-            if (action != null) {
-                action(arg1, arg2);
-            }
+            (GetDelegate(eventName) as Action<T1, T2>)?.Invoke(arg1, arg2);
         }
 
         /// <summary> 
@@ -75,10 +74,7 @@ namespace GlobalEvents {
         /// <param name="arg2">The second argument to invoke the global event.</param>
         /// <param name="arg3">The third argument to invoke the global event.</param>
         public static void InvokeEvent<T1, T2, T3>(string eventName, T1 arg1, T2 arg2, T3 arg3) {
-            var action = GetDelegate(eventName) as Action<T1, T2, T3>;
-            if (action != null) {
-                action(arg1, arg2, arg3);
-            }
+            (GetDelegate(eventName) as Action<T1, T2, T3>)?.Invoke(arg1, arg2, arg3);
         }
 
         /// <summary> 
@@ -90,10 +86,7 @@ namespace GlobalEvents {
         /// <param name="arg3">The third argument to invoke the global event.</param>
         /// <param name="arg4">The fourth argument to invoke the glboal event.</param>
         public static void InvokeEvent<T1, T2, T3, T4>(string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
-            var action = GetDelegate(eventName) as Action<T1, T2, T3, T4>;
-            if (action != null) {
-                action(arg1, arg2, arg3, arg4);
-            }
+            (GetDelegate(eventName) as Action<T1, T2, T3, T4>)?.Invoke(arg1, arg2, arg3, arg4);
         }        
         /// <summary>
         /// Is there an event registered to the event table?

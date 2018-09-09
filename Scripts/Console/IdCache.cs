@@ -1,5 +1,5 @@
 ﻿using Console.UI;
-using GlobalEvents;
+using Console;
 using System.Collections.Generic;
 using UnityEngine;
 

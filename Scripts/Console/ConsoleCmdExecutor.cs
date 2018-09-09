@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace Console {
 
-    using GlobalEvents;
+    using Console;
 
     public class ConsoleCmdExecutor : MonoBehaviour {
 

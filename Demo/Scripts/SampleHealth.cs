@@ -1,5 +1,5 @@
 ﻿using Console.UI;
-using GlobalEvents;
+using Console;
 using UnityEngine;
 
 namespace Console.Demo {
