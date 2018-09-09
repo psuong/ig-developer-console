@@ -9,12 +9,6 @@ namespace Console {
     /// </summary>
     public static class GlobalEventHandler {
 
-        /// <summary>
-        /// Returns a read only version of the global event table.
-        /// </summary>
-        public static IReadOnlyDictionary<string, Delegate> GlobalEventTable {
-            get { return new ReadOnlyDictionary<string, Delegate>(globalEventTable); }
-        }
 
         private static IDictionary<string, Delegate> globalEventTable = new Dictionary<string, Delegate>();
 
@@ -36,8 +30,15 @@ namespace Console {
         private static void UnsubscribeEvent(string eventName, Delegate handler) {
             Delegate d;
             if (globalEventTable.TryGetValue(eventName, out d)) {
-                globalEventTable[eventName] = Delegate.Remove(d, handler);
+                globalEventTable[eventName] = Delegate.RemoveAll(d, handler);
             }
+        }
+
+        /// <summary>
+        /// Returns a read only version of the global event table.
+        /// </summary>
+        public static IReadOnlyDictionary<string, Delegate> GlobalEventTable {
+            get { return new ReadOnlyDictionary<string, Delegate>(globalEventTable); }
         }
 
         /// <summary> 
@@ -140,6 +141,16 @@ namespace Console {
         /// <param name="action">The method to register with four arguments.</param>
         public static void SubscribeEvent<T1, T2, T3, T4>(String eventName, Action<T1, T2, T3, T4> action) {
             SubscribeEvent(eventName, action as Delegate);
+        }
+
+        /// <summary>
+        /// Clears all the internal event table of all subscribed methods.
+        /// </summary>
+        public static void UnsubscribeAll() {
+#if UNITY_EDITOR
+            UnityEngine.Debug.LogFormat("<color=808000ff>Removing {0} from the global event table.</color>", globalEventTable.Count);
+#endif
+            globalEventTable.Clear();
         }
 
         /// <summary>

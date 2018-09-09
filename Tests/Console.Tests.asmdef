@@ -1,12 +1,14 @@
 {
-    "name": "Console.Tests",
+    "name": "Tests",
     "references": [
         "Console"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false
 }
