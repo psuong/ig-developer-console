@@ -148,7 +148,7 @@ namespace Console {
         /// </summary>
         public static void UnsubscribeAll() {
 #if UNITY_EDITOR
-            UnityEngine.Debug.LogFormat("<color=808000ff>Removing {0} from the global event table.</color>", globalEventTable.Count);
+            UnityEngine.Debug.LogFormat("<color=#808000ff>Removing {0} from the global event table.</color>", globalEventTable.Count);
 #endif
             globalEventTable.Clear();
         }
