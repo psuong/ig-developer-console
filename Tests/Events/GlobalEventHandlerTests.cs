@@ -3,6 +3,9 @@ using System;
 
 namespace Console.Tests {
 
+    /// <summary>
+    /// Test all subscriptions, invocations, and unsubscriptions to the global event handler.
+    /// </summary>
     public class GlobalEventHandlerTests {
  
         [SetUp, TearDown]
