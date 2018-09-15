@@ -16,9 +16,9 @@ namespace Console.Tests {
         [Test]
         public void AddingAnAnonymousFunction() {
             var key = "test-event";
-#pragma warning disable CS0219 
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
             Action action = () => { int sum = 1 + 1; };
-#pragma warning restore CS0219
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
 
             GlobalEventHandler.SubscribeEvent(key, action);
             Assert.IsNotEmpty(GlobalEventHandler.GlobalEventTable, "No delegate was subscribed!");

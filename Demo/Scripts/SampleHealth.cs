@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Console.Demo {
 
     public class SampleHealth : MonoBehaviour {
+        /*
         
         [SerializeField, Tooltip("What is the max health of the agent?")]
         private float maxHealth = 100f;
@@ -52,5 +53,6 @@ namespace Console.Demo {
             health = Mathf.Clamp(0, maxHealth, health - amount * multiplier);
             ConsoleOutput.Log(string.Format("{0} took {1} damage", name, amount * multiplier), Color.blue);
         }
+        */
     }
 }
